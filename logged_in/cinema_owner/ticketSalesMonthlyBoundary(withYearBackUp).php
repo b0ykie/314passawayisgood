@@ -19,7 +19,7 @@
         <!-- HEADER SECTION -->
         <header>
             <div class="logo">
-                <img src="../../images\logo.jpg" alt="JKS Cinema Ticket Booking System">
+                <img src="../../images\logo.jpg" >
             </div>
 
             <nav>
@@ -79,7 +79,7 @@
         </main>
 
         <footer>
-            <p>&copy; Cafeworkforce Solutions</p>
+            <p>&copy; CafeworkForce Solutions</p>
         </footer>
     </body>
 </html>

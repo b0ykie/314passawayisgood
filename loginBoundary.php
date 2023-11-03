@@ -21,12 +21,12 @@
         <!-- HEADER SECTION --> 
         <header>
             <div class="logo">
-              <img src="images\logo.jpg" alt="Cinema Ticket Booking System" style="width: 70px; height: 60px;">
+              
             </div>
             <nav>
                 <ul>
                     <li><a href="homeBoundary.php">Home</a></li>
-                    <li><a href="movieListBoundary.php">Movies</a></li>
+                    
                     <li><a href="aboutUsBoundary.php">About Us</a></li>
                     <li><a href="contactUsBoundary.php">Contact Us</a></li>
                 </ul>
@@ -52,10 +52,10 @@
 
                     <select id="role" name="role" required>
                         <option value="" disabled selected>Select a role</option>
-                        <option value="owner">Owner</option>
-                        <option value="admin">Admin</option>
-                        <option value="manager">Manager</option>
-                        <option value="customer">Customer</option>        
+                        <option value="admin">admin</option>
+                        <option value="owner">owner</option>
+                        <option value="manager">manager</option>
+                        <option value="staff">staff</option>
                     </select>
 
                     <button type="submit" name="login">Login</button>
@@ -65,7 +65,7 @@
         
         <!-- FOOTER SECTION -->        
         <footer>
-            <p>&copy; Cafeworkforce Solutions</p>
+            <p>&copy; CafeworkForce Solutions</p>
         </footer>
     </body>
 </html>

@@ -46,7 +46,7 @@
     <!-- HEADER SECTION -->
     <header>
       <div class="logo">
-        <img src="../../images\logo.jpg" alt="JKS Cinema Ticket Booking System">
+        <img src="../../images\logoo.jpg" alt="Company logo">
       </div>
 
       <nav>
@@ -54,6 +54,7 @@
           <li><a href="adminhomeBoundary.php">Home</a></li>
           <li><a href="adminUsersBoundary.php">View User Accounts</a></li>
           <li><a href="createUsersBoundary.php">Create User Account</a></li>
+          <li><a href="adminProfilesBoundary.php">View User Profile</a></li>
           <li><a href="createProfileBoundary.php">Create User Profile </a></li>
 
         </ul>
@@ -92,7 +93,7 @@
 
     <!-- FOOTER SECTION -->
     <footer>
-      <p>&copy; Cafeworkforce Solutions</p>
+      <p>&copy; CafeworkForce Solutions</p>
     </footer>
   </body>
 </html>

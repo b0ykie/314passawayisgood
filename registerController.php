@@ -2,14 +2,13 @@
     
     class registerController{
 
-        public function newRegister($usernameVal, $emailVal, $passwordVal, $confirmpasswordVal) {
+        public function newRegister($usernameVal, $emailVal, $passwordVal, $confirmpasswordVal, $confirmRole) {
             // Retrieve the form data
             $username = $usernameVal;
             $email = $emailVal;
             $password = $passwordVal;
             $confirmpassword = $confirmpasswordVal;
-            $role = 'customer';
-            $loyaltyPts = 0;
+            $role = $confirmRole;
 
             require_once 'userAccountEntity.php';
 
@@ -33,8 +32,14 @@
                 exit();
             }
 
+            else if ($role == "--- Choose a role ---") {
+                $message = "Please choose a role.";
+                header("Location: registerBoundary.php?message=" . urlencode($message));
+                exit();
+            }
+
             else {
-                $user->addUserToDatabase($username, $password, $email, $role, $loyaltyPts);
+                $user->addUserToDatabase($username, $password, $email, $role);
                 $message = "Registration success!";
                 header("Location: loginBoundary.php?message=" . urlencode($message));
                 exit();
@@ -46,10 +51,11 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirmpassword = $_POST['confirm-password'];
+    $confirmrole = $_POST['confirm-role'];
 
     $registerController = new registerController();
 
-    $registerController ->newRegister($username, $email, $password, $confirmpassword);
+    $registerController ->newRegister($username, $email, $password, $confirmpassword, $confirmrole);
 
 
 ?>

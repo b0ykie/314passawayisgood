@@ -10,14 +10,14 @@
     <body>
         <header>
             <div class="logo">
-              <img src="images\logo.jpg" alt="Cinema Ticket Booking System" style="width: 70px; height: 60px;">
+              
             </div>
             <nav>
                 <ul>
                     <li><a href="homeBoundary.php">Home</a></li>
-                    <li><a href="movieListBoundary.php">Movies</a></li>
+                    
                     <li><a href="aboutUsBoundary.php">About Us</a></li>
-                    <li><a href="contactUs.html">Contact Us</a></li>
+                    <li><a href="contactUs.php">Contact Us</a></li>
                 </ul>
             </nav>
             <div class="user-actions">
@@ -29,13 +29,13 @@
         <main>
             <div class="Contact_us">
                 <h1>Contact Us</h1>
-                <h2>Owner : Dave <br>Manager : Kumar, Dom, YiRen <br>Admin : Zheng Bang <br> Calefair : WeiChoon</h2>
+                <h2>Owner :  Adrian<br>Manager : Kee Jin, Kelvin, Bryan, Larence, Tian Le<br>Admin : XX <br>
             </div>
         </main>
 
             <!-- FOOTER SECTION -->
         <footer>
-            <p>&copy; Cafeworkforce Solutions</p>
+            <p>&copy; CafeworkForce Solutions</p>
         </footer>
     </body>
 </html>

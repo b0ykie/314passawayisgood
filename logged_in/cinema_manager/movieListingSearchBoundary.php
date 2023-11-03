@@ -27,7 +27,7 @@
 <body>
 <header>
     <div class="logo">
-        <img src="../../images\logo.jpg" alt="JKS Cinema Ticket Booking System">
+        <img src="../../images\logo.jpg" >
     </div>
 
     <nav>

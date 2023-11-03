@@ -17,7 +17,7 @@
 
             if ($stmt->rowCount() == 1) {
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                return new UserAccount($result['userID'], $result['userName'], $result['userPassword'], $result['userProfile'], $result['userLoyalty_Pts']);
+                return new UserAccount($result['userID'], $result['userName'], $result['userPassword'], $result['userProfile']);
             } 
             else {
                 return false;
@@ -32,7 +32,7 @@
 
             if ($stmt->rowCount() == 1) {
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                return new UserAccount($result['userID'], $result['userName'], $result['userPassword'], $result['userProfile'], $result['userLoyalty_Pts']);
+                return new UserAccount($result['userID'], $result['userName'], $result['userPassword'], $result['userProfile']);
             } 
             else {
                 return false;
@@ -66,10 +66,10 @@
         }
 
         // Add the user to the database
-        public function addUserToDatabase($username, $password, $email, $role, $loyaltyPts) {
+        public function addUserToDatabase($username, $password, $email, $role) {
             // Prepare a statement to insert the user information into the database
-            $stmt = $this->db->prepare('INSERT INTO user_account (userName, userPassword, userEmail, userProfile, userLoyalty_Pts ) VALUES (:username, :password, :email, :role, :loyaltyPts)');
-            $stmt->execute(array(':username' => $username, ':password' => $password, ':email' => $email, ':role' => $role, ':loyaltyPts' => $loyaltyPts));
+            $stmt = $this->db->prepare('INSERT INTO user_account (userName, userPassword, userEmail, userProfile) VALUES (:username, :password, :email, :role)');
+            $stmt->execute(array(':username' => $username, ':password' => $password, ':email' => $email, ':role' => $role));
         }
     }
 
@@ -79,14 +79,12 @@
         private $username;
         private $password;
         private $role;
-        private $loyalty_pts;
         
-        public function __construct($id, $username, $password, $role, $loyaltyPts) {
+        public function __construct($id, $username, $password, $role) {
             $this->id = $id;
             $this->username = $username;
             $this->password = $password;
             $this->role = $role;
-            $this->loyaltyPts = $loyaltyPts;
         }
 
         public function getId() {
@@ -103,10 +101,6 @@
 
         public function getRole() {
             return $this->role;
-        }
-
-        public function getLoyaltyPts() {
-            return $this->loyaltyPts;
         }
     }
 

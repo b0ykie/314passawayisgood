@@ -33,13 +33,13 @@
         <!-- HEADER SECTION -->
         <header>
             <div class="logo">
-                <img src="../../images\logo.jpg" alt="JKS Cinema Ticket Booking System">
+                <img src="../../images\logo.jpg" >
             </div>
 
             <nav>
                 <ul>
                 <li><a href="cushomeBoundary.php">Home</a></li>
-                <li><a href="cusmovieListBoundary.php">Movies</a></li>
+                
                 <li><a href="cusaboutUsBoundary.php">About Us</a></li>
                 <li><a href="cuscontactUsBoundary.php">Contact Us</a></li>
                 </ul>
@@ -91,7 +91,7 @@
 
         <!-- FOOTER SECTION -->     
         <footer>
-            <p>&copy; Cafeworkforce Solutions</p>
+            <p>&copy; CafeworkForce Solutions</p>
         </footer>
 
         <script src="myscript.js"></script>

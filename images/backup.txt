@@ -121,7 +121,7 @@ html lang=en
     main
     !-- FOOTER SECTION --
     footer
-      p&copy; Cafeworkforce Solutionsp
+      p&copy; CafeworkForce Solutionsp
     footer
   body
   html

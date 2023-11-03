@@ -1,7 +1,7 @@
 <?php
   session_start();
   $username = $_SESSION['username'];
-  require_once 'adminUsersController.php';
+  require_once 'adminProfilesController.php';
   $adminUsersController = new AdminUsersController();
 // Check if a search keyword is provided
   $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
@@ -53,8 +53,8 @@
       <!-- Search form -->
       <div class="search-container">
         <form method="post">
-          <label for="search">Search User : </label>
-          <input type="text" name="search" id="search" placeholder="Search user...">
+          <label for="search">Search Profile : </label>
+          <input type="text" name="search" id="search" placeholder="Search profile...">
           <button type="submit" name="submit">Search</button>
         </form>
       </div>
@@ -71,10 +71,7 @@
           foreach ($resultSearch as $row) {
             echo "<tr>";
             echo "<td>" . $row->getUsername() . "</td>";
-            echo "<td>" . $row->getPassword() . "</td>";
-            echo "<td>" . $row->getEmail() . "</td>";
-            echo "<td>" . $row->getRole() . "</td>";
-            echo "<td><a href='updateUserBoundary.php?id=" . $row->getId() . "'>Edit</a></td>";
+            echo "<td><a href='updateprofileBoundary.php?id=" . $row->getId() . "'>Edit</a></td>";
             echo "</tr>";
           }
           echo "</table>";
@@ -85,21 +82,18 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>Username</th><th>Password</th><th>Email</th><th>Profile</th><th>Action</th></tr>";
+          echo "<tr><th>userProfileType</tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
-            echo "<td>" . $row['userName'] . "</td>";
-            echo "<td>" . $row['userPassword'] . "</td>";
-            echo "<td>" . $row['userEmail'] . "</td>";
-            echo "<td>" . $row['userProfile'] . "</td>";
-            echo "<td><a href='updateUserBoundary.php?id=" . $row['userID'] . "'>Edit</a></td>";
+            echo "<td>" . $row['userProfileType'] . "</td>";
+            echo "<td><a href='updateProfileBoundary.php?id=" . $row['userProfileType'] . "'>Edit</a></td>";
             echo "</tr>";
           }
           echo "</table>";
         } else {
-          echo "No users found.";
+          echo "No profiles found.";
         }
       }
       ?>

@@ -110,6 +110,30 @@
     }
 
 
+    class UserProfile{
+
+    }
+
+    class  UserProfileEntity{
+        private int $name;
+        
+    
+	/**
+	 * @param int $name 
+	 * @return self
+	 */
+	public function setName(int $name): self {
+		$this->name = $name;
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getName(): int {
+		return $this->name;
+	}
+}
     class cinemaRoomE {
        
         private int $cinema_rm_ID;

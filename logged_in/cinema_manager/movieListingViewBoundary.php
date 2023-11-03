@@ -26,7 +26,7 @@ $movieList = $_SESSION['movieList'] ?? [];
 <body>
 <header>
         <div class="logo">
-            <img src="../../images\logo.jpg" alt="JKS Cinema Ticket Booking System">
+            <img src="../../images\logo.jpg" >
         </div>
 
         <nav>
@@ -89,7 +89,7 @@ $movieList = $_SESSION['movieList'] ?? [];
 
     <!-- FOOTER SECTION -->  
     <footer>
-        <p>&copy; Cafeworkforce Solutions</p>
+        <p>&copy; CafeworkForce Solutions</p>
     </footer>
     </body>
 </html>

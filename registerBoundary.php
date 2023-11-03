@@ -22,12 +22,12 @@
         <!-- HEADER SECTION --> 
         <header>
             <div class="logo">
-              <img src="images\logo.jpg" alt="Cinema Ticket Booking System" style="width: 70px; height: 60px;">
+              
             </div>
             <nav>
                 <ul>
                     <li><a href="homeBoundary.php">Home</a></li>
-                    <li><a href="movieListBoundary.php">Movies</a></li>
+                    
                     <li><a href="aboutUsBoundary.php">About Us</a></li>
                     <li><a href="contactUsBoundary.php">Contact Us</a></li>
                 </ul>
@@ -53,14 +53,24 @@
                 
                     <label for="confirm-password">Confirm Password</label>
                     <input type="password" id="v" name="confirm-password" required>
-                
+
+                    <label for="confirm-role">Role</label>
+                    <select name="confirm-role" id="role" required>
+                        <option value="--- Choose a role ---">--- Choose a role ---</option>
+                        <option value="admin">admin</option>
+                        <option value="owner">owner</option>
+                        <option value="manager">manager</option>
+                        <option value="staff">staff</option>
+                    </select>
+
+                    <br>
                     <button type="submit">Register</button>
                 </form>
             </div>
         </main>
 
         <footer>
-            <p>&copy; Cafeworkforce Solutions</p>
+            <p>&copy; CafeworkForce Solutions</p>
         </footer>
         
     </body>

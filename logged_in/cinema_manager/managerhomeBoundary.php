@@ -97,7 +97,7 @@
   </main>
     <!-- FOOTER SECTION -->
     <footer>
-      <p>&copy; Cafeworkforce Solutions</p>
+      <p>&copy; CafeworkForce Solutions</p>
     </footer>
 
 
