@@ -1,0 +1,407 @@
+HTML-------------------
+
+
+
+
+!DOCTYPE html
+html lang=en
+  head
+    meta charset=UTF-8
+    meta name=viewport content=width=device-width, initial-scale=1.0
+    titleCinema Ticket Booking Systemtitle
+    link rel=stylesheet href=assetscssstyles.css
+  head
+  body
+    header
+      div class=logo
+        img src=assetsimageslogo.jpg alt=Cinema Ticket Booking System
+      div
+      nav
+        ul
+          lia href=#Homeali
+          lia href=#Moviesali
+          lia href=#About Usali
+          lia href=#Contact Usali
+        ul
+      nav
+      div class=user-actions
+        a href=# class=login-btnLogina
+        a href=# class=register-btnRegistera
+      div
+    header
+
+    section class=hero
+      div class=hero-content
+        h1Get Ready for the Latest Blockbusters!h1
+        pBook your tickets online today and enjoy a hassle-free cinema experience.p
+        a href=# class=browse-btnBrowse Moviesa
+      div
+      div class=hero-image
+        img src=assetsimagesmovie1.jpg alt=Popular Movie Poster
+      div
+    section
+
+
+  !-- MAIN CONTENT SECTION --
+  main
+    section class=featured-movies
+      h2Featured Moviesh2
+      div class=movie-panel
+        div class=movie-item
+          img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+          h3Movie Titleh3
+        div
+        div class=movie-item
+          img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+          h3Movie Titleh3
+        div
+        div class=movie-item
+          img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+          h3Movie Titleh3
+        div
+        div class=movie-item
+          img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+          h3Movie Titleh3
+        div
+        div class=movie-item
+          img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+          h3Movie Titleh3
+        div
+      div
+    section
+    section class=featured-movies
+        h2Featured Moviesh2
+        div class=movie-panel
+          div class=movie-item
+            img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+            h3Movie Title 1h3
+          div
+          div class=movie-item
+            img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+            h3Movie Title 2h3
+          div
+          div class=movie-item
+            img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+            h3Movie Title 3h3
+          div
+          div class=movie-item
+            img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+            h3Movie Title 4h3
+          div
+          div class=movie-item
+            img src=CUsers8KGDesktopMovie bookingassetsimagesmovie 1.jpg alt=Movie Poster
+            h3Movie Title 5h3
+          div
+        div
+      section
+      
+      style
+      .movie-panel {
+        display flex;
+        overflow-x scroll;
+        scroll-behavior smooth;
+        -webkit-overflow-scrolling touch;
+        white-space nowrap;
+      }
+      
+      .movie-item {
+        margin-right 20px;
+      }
+      style
+      
+      script
+       Automatically scroll the movie panel every 5 seconds
+      setInterval(function() {
+        const moviePanel = document.querySelector('.movie-panel');
+        const scrollAmount = 300;
+        moviePanel.scrollLeft += scrollAmount;
+      }, 5000);
+      script
+      
+    main
+    !-- FOOTER SECTION --
+    footer
+      p&copy; Cafeworkforce Solutionsp
+    footer
+  body
+  html
+
+
+
+
+
+---------------------------------------------CSS----------------------------------------
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: url('https://images-na.ssl-images-amazon.com/images/S/pv-target-images/a342ae85816eb9705c183334ebf2ff937bf7e423e23eae7d2e00978935d655ab._SX1080_.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #0a0a0a;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+  }
+  
+  p {
+    line-height: 1.5;
+  }
+  
+  a {
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  a:hover {
+    color: #f5c518;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Header Styles */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #252525;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .logo img {
+    height: 60px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  nav ul li {
+    margin: 0 20px;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+  
+  nav ul li a:hover {
+    background-color: #fff;
+    color: #252525;
+  }
+  
+  .user-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-btn, .register-btn {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-left: 20px;
+    border: 2px solid #fff;
+  }
+  
+  .login-btn:hover, .register-btn:hover {
+    background-color: #fff;
+    color: #252525;
+  }
+  
+  /* Hero Styles */
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 20px;
+  }
+  
+  .hero-content {
+    max-width: 600px;
+    margin-right: 50px;
+  }
+  
+  .hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px #000;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+  }
+  
+  .browse-btn {
+    display: inline-block;
+    background-color: #f5c518;
+    padding: 20px 40px;
+    border-radius: 50px
+  }  
+  /* Movie Sections Styles */
+
+/* Movie Cards */
+.movie-card .movie-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    color: #fff;
+    background-color: rgba(0,0,0,0.8);
+  }
+  
+  .movie-card .movie-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+  
+  .movie-card .movie-info p {
+    font-size: 1rem;
+  }
+  
+  /* Booking Section Styles */
+  .booking-section {
+    background-color: #252525;
+    color: #fff;
+    padding: 100px 20px;
+  }
+  
+  .booking-section h2 {
+    font-size: 3rem;
+    margin-bottom: 50px;
+  }
+  
+  .booking-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .booking-form label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .booking-form select {
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 20px;
+  }
+  
+  .booking-form .btn {
+    display: inline-block;
+    background-color: #f5c518;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s ease-in-out;
+    color: #252525;
+    text-decoration: none;
+  }
+  
+  .booking-form .btn:hover {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  /* Footer Styles */
+  footer {
+    background-color: #0a0a0a;
+    color: #fff;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .footer-logo img {
+    height: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .footer-social a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: #fff;
+    color: #252525;
+    border-radius: 50%;
+    margin: 0 10px;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footer-social a:hover {
+    background-color: #f5c518;
+    color: #252525;
+  }
+  
+  .footer-social i {
+    font-size: 1.4rem;
+  }
+  
+  .footer-links {
+    margin-bottom: 20px;
+  }
+  
+  .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    margin: 0 10px;
+  }
+  
+  .footer-credits {
+    font-size: 0.8rem;
+  }
+  

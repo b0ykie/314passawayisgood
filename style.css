@@ -1,0 +1,348 @@
+body {
+    /*background-color: #f2f2f2;*/
+    background-image: url("images/home_background.jpg");
+    background-size: cover; /* This property scales the image to cover the entire background area */
+    background-position: center; /* This property centers the image vertically and horizontally */
+}
+  
+
+/* Header CSS*/
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2b2b2b;
+    padding: 20px;
+}
+
+.logo img {
+    max-height: 60px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav li a{
+    color: #fff;
+}
+
+nav ul li a:hover{
+    background-color: #fff;
+    color: #3c3a3a;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.login-btn, .register-btn, .logout-btn, .purchase_history-btn{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0077ff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.login-btn:hover, .register-btn:hover, .logout-btn:hover, .purchase_history-btn:hover {
+    background-color: #0456a8;
+}
+
+ /* Footer Styles */
+footer {
+    bottom: 0;
+    background-color: #2b2b2b;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    bottom: 0;
+    margin-top: 20px;
+}
+
+/* Hero Styles */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 20px;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin-right: 50px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: #f1f1f1;
+    text-shadow: 2px 2px #afacac;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: #f1f1f1;
+}
+
+.browse-btn {
+    display: inline-block;
+    background-color: #f5c518;
+    padding: 20px 40px;
+    border-radius: 50px
+} 
+
+a:hover {
+    color: #886c06;
+} 
+
+/* movie items styles */
+.movie-panel {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+/* home, main styles */
+.featured-movies h2, .featured-movies h3 {
+    color: #fff;
+}
+
+.featured-movies a {
+    color: #1886c5;
+}
+
+.featured-movies a:hover{
+    color: #886c06;
+}
+
+.movie-panel li {
+    margin-right: 20px;
+}
+
+
+/* movie list, search container styles */
+.search-container label {
+    color: #fff;
+}
+
+.search-container, .movie_list h1 {
+    text-align: center;
+}
+
+.search-container label {
+    font-size: 20px;
+}
+  
+.search-container input[type="text"] {
+    font-size: 20px;
+    width: 200px;
+}  
+
+.search-container button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #3e8e41;
+}
+
+/* movie list, main styles */
+.movie_list {
+    color: #fff;
+}
+
+.movie_list a {
+    color: #1886c5;
+}
+
+.movie_list a:hover{
+    color: #886c06;
+}
+
+.movie_list li {
+    display: flex;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.movie-info{
+    text-align: left;
+}
+
+/* About us styles */
+.About_us {
+    color: #fff;
+}
+
+/* Contact us styles */
+.Contact_us {
+    color: #fff;
+}
+
+/* register page styles */
+.registerContain {
+    color: #fff;
+}
+
+.registerContain form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.registerContain label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.registerContain input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.registerContain button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.registerContain button:hover {
+    background-color: #3e8e41;
+}
+
+/* Log In page styles */
+.loginContain {
+    color: #fff;
+}
+
+.loginContain form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.loginContain label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.loginContain input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.loginContain select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.loginContain button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.loginContain button:hover {
+    background-color: #3e8e41;
+}
+
+
+.welcome, .loyaltypts {
+    color: white;
+    font-size: 10px;
+}
+
+/* Booking page styles */
+main {
+    color: #fff;
+    text-align: center;
+}
+
+.bookingContain form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.bookingContain form button:hover {
+    background-color: #3e8e41;
+}
+
+.bookingContain form div {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.payment-method label, .payment-method input {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #646464;
+    border: 1px solid #000;
+}
+
+th {
+    background-color: #393939;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+  
