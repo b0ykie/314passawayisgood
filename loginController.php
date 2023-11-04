@@ -32,7 +32,7 @@
                         header('Location: logged_in/system_admin/adminhomeBoundary.php');
                         exit();
                     case 'owner':
-                        header('Location: logged_in/cinema_owner/ownerhomeBoundary.php');
+                        header('Location: logged_in/cafe_owner/ownerhomeBoundary.php');
                         exit();
                     case 'manager':
                         header('Location: logged_in/cinema_manager/managerhomeBoundary.php');

@@ -2,7 +2,6 @@
     session_start();
     $username = $_SESSION['username'];
     $month = $_POST['viewMonth'];
-    $year = $_POST['viewYear'];
     require_once('ticketSalesMonthlyController.php');
 ?>
 
@@ -11,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ticket Sales Report</title>
+        <title>Monthly Ticket Sales Report</title>
         <link rel="stylesheet" href="../../style.css">
     </head>
 
@@ -19,7 +18,7 @@
         <!-- HEADER SECTION -->
         <header>
             <div class="logo">
-                <img src="../../images\logo.jpg" >
+                <img src="../../images\logoo.jpg" >
             </div>
 
             <nav>
@@ -47,32 +46,37 @@
             <section class="movie_list">
                 <!-- Retrieve and display the movie information from the database based on the search keyword -->
                 <h1>Movie Listing</h1>
-                <table>
-                    <tr><th>Book Ticket ID</th>
-                    <th>No. of Tickets Booked</th>
-                    <th>Movie Name Booked</th>
-                    <th>Ticket Type</th>
-                    <th>Ticket Price Paid</th>
-                    <th>Movie ID</th>
-                    <th>Movie Screening Date</th></tr>
                     <?php
                         $ticketMonthlySales = new ticketSalesMonthlyController();
                         // Retrieve ticket sale information from the database
-                        $monthTixSales = $ticketMonthlySales->printticketSalesMonthly($month, $year);
+                        $monthTixSales = $ticketMonthlySales->printticketSalesMonthly($month);
                         // Display the movie information in HTML
                         $totalSales = 0;
-                        foreach ($monthTixSales as $row) {
-                            echo "<tr><td>" . $row->getBookTicketID() . "</td>
-                            <td>" . $row->getNoOfTicketsBooked() . "</td>
-                            <td>" . $row->getMovieNameBooked() . "</td>
-                            <td>" . $row->getTicketTypeIndex() . "</td>
-                            <td>" . $row->getTicketPricePaid() . "</td>
-                            <td>" . $row->getMovieID() . "</td>
-                            <td>" . $row->getMovieScreeningDate() . "</td>
-                            </tr>";
-                            $totalSales += $row->getTicketPricePaid();
+                        if ($monthTixSales != FALSE) {
+                            echo "<table>
+                            <tr><th>Book Ticket ID</th>
+                            <th>No. of Tickets Booked</th>
+                            <th>Movie Name Booked</th>
+                            <th>Ticket Type</th>
+                            <th>Ticket Price Paid</th>
+                            <th>Movie ID</th>
+                            <th>Movie Screening Date</th></tr>";
+                            foreach ($monthTixSales as $row) {
+                                echo "<tr><td>" . $row->getBookTicketID() . "</td>
+                                <td>" . $row->getNoOfTicketsBooked() . "</td>
+                                <td>" . $row->getMovieNameBooked() . "</td>
+                                <td>" . $row->getTicketTypeIndex() . "</td>
+                                <td>" . $row->getTicketPricePaid() . "</td>
+                                <td>" . $row->getMovieID() . "</td>
+                                <td>" . $row->getMovieScreeningDate() . "</td>
+                                </tr>";
+                                $totalSales += $row->getTicketPricePaid();
+                            }
+                            echo "<tr><td colspan='4'></td><td>Total Sales:</td><td colspan='2'>" . $totalSales . "</td></tr>";
                         }
-                        echo "<tr><td colspan='4'></td><td>Total Sales:</td><td colspan='2'>" . $totalSales . "</td></tr>";
+                        else {
+                            echo "No ticket sales found.";
+                        }
                     ?>
                 </table>
             </section>

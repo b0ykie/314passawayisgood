@@ -1,9 +1,8 @@
 <?php
     session_start();
     $username = $_SESSION['username'];
-    $week = $_POST['viewWeekly'];
-    $viewWeeklyOfMonth = $_POST['viewWeeklyOfMonth'];
-    require_once('fnbSalesWeeklyController.php');
+    $day = $_POST['viewDay'];
+    require_once('fnbSalesDailyController.php');
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Weekly F&B Sales Report</title>
+        <title>Daily F&B Sales Report</title>
         <link rel="stylesheet" href="../../style.css">
     </head>
 
@@ -19,7 +18,7 @@
         <!-- HEADER SECTION -->
         <header>
             <div class="logo">
-                <img src="../../images\logo.jpg" >
+                <img src="../../images\logoo.jpg" >
             </div>
 
             <nav>
@@ -42,19 +41,18 @@
 
         <!-- MAIN CONTENT SECTION -->
         <main>
-            <h1>Weekly F&B Sales Report</h1>
+            <h1>Daily F&B Sales Report</h1>
 
             <section class="movie_list">
                 <!-- Retrieve and display the movie information from the database based on the search keyword -->
                 <h1>F&B Listing</h1>
-
                     <?php
-                        $fnbWeeklySales = new fnbSalesWeeklyController();
+                        $fnbDailySales = new fnbSalesDailyController();
                         // Retrieve ticket sale information from the database
-                        $weekFnbSales = $fnbWeeklySales->printFnbSalesWeekly($week, $viewWeeklyOfMonth);
+                        $dayFnbSales = $fnbDailySales->printFnbSalesDaily($day);
                         // Display the movie information in HTML
                         $totalSales = 0;
-                        if ($weekFnbSales != FALSE) {
+                        if ($dayFnbSales != FALSE) {
                             echo "<table>
                             <tr><th>F&B ID</th>
                             <th>F&B Name</th>
@@ -62,7 +60,7 @@
                             <th>F&B Loyalty Points</th>
                             <th>F&B Date For</th>
                             <th>F&B Book By</th></tr>";
-                            foreach ($weekFnbSales as $row) {
+                            foreach ($dayFnbSales as $row) {
                                 echo "<tr><td>" . $row->getBookFnbID() . "</td>
                                 <td>" . $row->getFnbName() . "</td>
                                 <td>" . $row->getFnbCost() . "</td>

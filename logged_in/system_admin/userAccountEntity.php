@@ -479,13 +479,13 @@ class Profile
         $searchProfile = []; // Array to store BookTicket objects
 
         foreach ($result as $row) {
-          $searchUser[] = new UserProfile(
+          $searchProfile[] = new UserProfile(
             $row['userProfileType'],
           );
         }
     
         mysqli_close($connection);
-        return $searchUser;
+        return $searchProfile;
     }
 
     public function checkDuplicate($userID)

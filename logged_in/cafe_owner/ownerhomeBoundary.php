@@ -16,14 +16,14 @@
     <!-- HEADER SECTION -->
     <header>
       <div class="logo">
-        <img src="../../images\logo.jpg" >
+        <img src="../../images\logoo.jpg" alt="Company logo">
       </div>
 
       <nav>
         <ul>
           <li><a href="ownerhomeBoundary.php">Home</a></li>
-          <li><a href="ticketSalesBoundary.php">Ticket Sales</a></li>
-          <li><a href="fnbSalesBoundary.php">F&B Sales</a></li>
+          <li><a href="ownerSlotsBoundary.php">View Work Slots</a></li>
+          <li><a href="createSlotsBoundary.php">Create Work Slots</a></li>
         </ul>
       </nav>
 
@@ -41,11 +41,14 @@
     <main>
         <section class="hero">
         <div class="hero-content">
-          <a href="ticketSalesBoundary.php" class="browse-btn">View Ticket Sales</a>
-          <a href="fnbSalesBoundary.php" class="browse-btn">View F&B Sales</a>
+            <h1>Welcome to work slot management!</h1>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
         </div>
         <div class="hero-image">
-            <img src="../../images\movie 1.jpg" alt="Popular Movie Poster">
+            <img src="../../images\1.jpg" alt="Company logo">
         </div>
         </section> 
     </main>

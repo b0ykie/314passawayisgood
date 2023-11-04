@@ -14,7 +14,7 @@
   <body>
     <header>
       <div class="logo">
-        <img src="..\..\images\logo.jpg" alt="Cinema Ticket Booking System">
+        <img src="..\..\images\logoo.jpg" alt="Cinema Ticket Booking System">
       </div>
       <nav>
         <ul>

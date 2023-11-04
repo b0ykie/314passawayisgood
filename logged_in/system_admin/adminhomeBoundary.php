@@ -22,7 +22,7 @@
     <!-- HEADER SECTION -->
     <header>
       <div class="logo">
-        <img src="../../images\logoo.jpg"  alt="Company logo">
+        <img src="../../images\logoo.jpg" alt="Company logo">
       </div>
 
       <nav>

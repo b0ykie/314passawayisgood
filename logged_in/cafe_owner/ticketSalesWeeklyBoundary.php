@@ -1,8 +1,9 @@
 <?php
     session_start();
     $username = $_SESSION['username'];
-    $day = $_POST['viewDay'];
-    require_once('ticketSalesDailyController.php');
+    $week = $_POST['viewWeekly'];
+    $viewWeeklyOfMonth = $_POST['viewWeeklyOfMonth'];
+    require_once('ticketSalesWeeklyController.php');
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Daily Ticket Sales Report</title>
+        <title>Weekly Ticket Sales Report</title>
         <link rel="stylesheet" href="../../style.css">
     </head>
 
@@ -18,7 +19,7 @@
         <!-- HEADER SECTION -->
         <header>
             <div class="logo">
-                <img src="../../images\logo.jpg" >
+                <img src="../../images\logoo.jpg" >
             </div>
 
             <nav>
@@ -41,18 +42,18 @@
 
         <!-- MAIN CONTENT SECTION -->
         <main>
-            <h1>Daily Ticket Sales Report</h1>
+            <h1>Weekly Ticket Sales Report</h1>
 
             <section class="movie_list">
                 <!-- Retrieve and display the movie information from the database based on the search keyword -->
                 <h1>Movie Listing</h1>
                     <?php
-                        $ticketDailySales = new ticketSalesDailyController();
+                        $ticketWeeklySales = new ticketSalesWeeklyController();
                         // Retrieve ticket sale information from the database
-                        $dayTixSales = $ticketDailySales->printticketSalesDaily($day);
+                        $weekTixSales = $ticketWeeklySales->printticketSalesWeekly($week, $viewWeeklyOfMonth);
                         // Display the movie information in HTML
                         $totalSales = 0;
-                        if ($dayTixSales != FALSE) {
+                        if ($weekTixSales != FALSE) {
                             echo "<table>
                             <tr><th>Book Ticket ID</th>
                             <th>No. of Tickets Booked</th>
@@ -61,7 +62,7 @@
                             <th>Ticket Price Paid</th>
                             <th>Movie ID</th>
                             <th>Movie Screening Date</th></tr>";
-                            foreach ($dayTixSales as $row) {
+                            foreach ($weekTixSales as $row) {
                                 echo "<tr><td>" . $row->getBookTicketID() . "</td>
                                 <td>" . $row->getNoOfTicketsBooked() . "</td>
                                 <td>" . $row->getMovieNameBooked() . "</td>

@@ -33,7 +33,7 @@
         <!-- HEADER SECTION -->
         <header>
             <div class="logo">
-                <img src="../../images\logo.jpg" >
+                <img src="../../images\logoo.jpg" >
             </div>
 
             <nav>
