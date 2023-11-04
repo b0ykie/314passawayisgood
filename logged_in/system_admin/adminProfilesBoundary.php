@@ -2,12 +2,12 @@
   session_start();
   $username = $_SESSION['username'];
   require_once 'adminProfilesController.php';
-  $adminUsersController = new AdminUsersController();
+  $adminProfilesController = new AdminProfilesController();
 // Check if a search keyword is provided
   $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Call the searchUsers method with the search keyword
-  $result = $adminUsersController->onInit();
+  $result = $adminProfilesController->onInit();
 ?>
 
 <!DOCTYPE html>
@@ -61,17 +61,17 @@
       <?php
       if (isset($_POST['submit'])) {
         $searchKeyword = $_POST['search'];
-        $resultSearch = $adminUsersController->searchUsers($searchKeyword);
+        $resultSearch = $adminProfilesController->searchProfile($searchKeyword);
 
         if ($resultSearch != FALSE) {
           echo "<table>";
-          echo "<tr><th>Username</th><th>Password</th><th>Email</th><th>Profile</th><th>Action</th></tr>";
+          echo "<tr><th>Profile</th><th>Action</th></tr>";
 
           // Output data of each user
           foreach ($resultSearch as $row) {
             echo "<tr>";
-            echo "<td>" . $row->getUsername() . "</td>";
-            echo "<td><a href='updateprofileBoundary.php?id=" . $row->getId() . "'>Edit</a></td>";
+            echo "<td>" . $row->getProfile() . "</td>";
+            echo "<td><a href='updateProfileBoundary.php?id=" . $row->getProfile() . "'>Edit</a></td>";
             echo "</tr>";
           }
           echo "</table>";
@@ -82,13 +82,14 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>userProfileType</tr>";
+          echo "<tr><th>userProfileType</th><th>Action</th><th>Action</th></tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . $row['userProfileType'] . "</td>";
             echo "<td><a href='updateProfileBoundary.php?id=" . $row['userProfileType'] . "'>Edit</a></td>";
+            echo "<td><a href='deleteProfileBoundary.php?id=" . $row['userProfileType'] . "'>Delete</a></td>";
             echo "</tr>";
           }
           echo "</table>";

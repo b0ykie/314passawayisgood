@@ -2,20 +2,20 @@
 
 require_once 'userAccountEntity.php';
 
-class AdminUsersController
+class AdminProfilesController
 {
     public function onInit()
     {
-        $user = new User();
+        $user = new Profile();
 
         return $user->getUserProfiles();
     }
 
     public function searchProfile($searchKeyword)
     {
-        $user = new User();
-        $searchProfile = $user->searchUserProfiles($searchKeyword);
-
+        $profile = new Profile();
+        $searchProfile = $profile->searchUserProfiles($searchKeyword);
+        
         if (!empty($searchProfile)) {
             return $searchProfile;
         }

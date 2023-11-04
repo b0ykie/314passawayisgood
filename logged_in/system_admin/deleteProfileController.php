@@ -1,7 +1,7 @@
 <?php
 require_once 'userAccountEntity.php';
 
-class UpdateProfileController {
+class DeleteProfileController {
     public function onInit($userID) {
         $userEntity = new Profile();
         $user = $userEntity->getUserByID($userID);
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userID = $_POST['id'];
 
     // Create an instance of UpdateUserController
-    $updateUserController = new UpdateProfileController();
+    $updateUserController = new DeleteProfileController();
 
     // Retrieve the existing user's information
     $user = $updateUserController->onInit($userID);
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Update the user information
         $userEntity = new Profile();
-        if ($userEntity->updateUserProfile($updatedProfile, $userID)) {
+        if ($userEntity->DeleteUserProfile($updatedProfile, $userID)) {
             // Redirect the user back to the users page after the update
             header("Location: adminProfilesBoundary.php");
             exit();

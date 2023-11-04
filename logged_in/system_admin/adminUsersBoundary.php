@@ -2,12 +2,12 @@
   session_start();
   $username = $_SESSION['username'];
   require_once 'adminUsersController.php';
-  $adminUsersController = new AdminUsersController();
+  $adminProfilesController = new AdminUsersController();
 // Check if a search keyword is provided
   $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Call the searchUsers method with the search keyword
-  $result = $adminUsersController->onInit();
+  $result = $adminProfilesController->onInit();
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +61,7 @@
       <?php
       if (isset($_POST['submit'])) {
         $searchKeyword = $_POST['search'];
-        $resultSearch = $adminUsersController->searchUsers($searchKeyword);
+        $resultSearch = $adminProfilesController->searchUsers($searchKeyword);
 
         if ($resultSearch != FALSE) {
           echo "<table>";
@@ -85,7 +85,7 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>Username</th><th>Password</th><th>Email</th><th>Profile</th><th>Action</th></tr>";
+          echo "<tr><th>Username</th><th>Password</th><th>Email</th><th>Profile</th><th>Action</th><th>Action</th></tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
@@ -95,6 +95,7 @@
             echo "<td>" . $row['userEmail'] . "</td>";
             echo "<td>" . $row['userProfile'] . "</td>";
             echo "<td><a href='updateUserBoundary.php?id=" . $row['userID'] . "'>Edit</a></td>";
+            echo "<td><a href='deleteUserBoundary.php?id=" . $row['userID'] . "'>Delete</a></td>";
             echo "</tr>";
           }
           echo "</table>";

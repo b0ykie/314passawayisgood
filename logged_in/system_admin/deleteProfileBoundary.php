@@ -1,12 +1,12 @@
 <?php
-require_once 'updateProfileController.php';
+require_once 'deleteProfileController.php';
 session_start();
 
 $username = $_SESSION['username'];
 
 if (isset($_GET['id'])) {
     $userID = $_GET['id'];
-    $userController = new UpdateProfileController();
+    $userController = new DeleteProfileController();
     $user = $userController->onInit($userID);
 
     if ($user !== null) {
@@ -20,13 +20,13 @@ if (isset($_GET['id'])) {
             <link rel="stylesheet" href="admin.css">
         </head>
         <body>
-            <form method="POST" action="updateProfileController.php">
+            <form method="POST" action="deleteProfileController.php">
                 <input type="hidden" name="id" value="<?php echo $user->getProfile(); ?>">
 
                 <label for="profile">Profile:</label>
                 <input type="text" name="profile" value="<?php echo $user->getProfile(); ?>"><br>
 
-                <input type="submit" value="Update">
+                <input type="submit" value="Delete">
             </form>
         </body>
         </html>

@@ -81,7 +81,6 @@ class User
         }
       }
     
-      
     
 
     public function getUserAccounts()
@@ -134,24 +133,6 @@ class User
             die('Failed to connect to the database: ' . mysqli_connect_error());
         }
 
-    }
-
-    public function searchUserProfiles($searchKeyword){
-        $connection = $this->connect();
-
-        $sql = "SELECT * FROM USER_PROFILE WHERE userProfileType LIKE '%$searchKeyword%'";
-        $result = mysqli_query($connection, $sql);
-
-        $searchProfile = []; // Array to store BookTicket objects
-
-        foreach ($result as $row) {
-          $searchUser[] = new UserProfile(
-            $row['userProfileType']
-          );
-        }
-    
-        mysqli_close($connection);
-        return $searchUser;
     }
 
     public function retrieveAdminUsername()
@@ -312,12 +293,40 @@ class User
         }
     }
 
-    public function updateUserProfile($updatedProfile)
+    public function deleteUserAccount($userID)
     {
         try {
             $connection = $this->connect();
 
-            $checkSql = "SELECT * FROM USER_PROFILE WHERE userProfileType = '$updatedUsername'";
+            $checkSql = "SELECT * FROM USER_ACCOUNT WHERE userID = '$userID'";
+            $checkResult = mysqli_query($connection, $checkSql);
+            // Check if a user with the same username exists
+            if (mysqli_num_rows($checkResult) <= 0) {
+                // Display an error message or handle the duplicate username scenario as desired
+                echo "Username already exists. Please choose a different username.";
+
+            } else {
+                $deleteSqlUserProfile = "DELETE FROM user_account WHERE userID = :oldProfile";
+
+                $stmt = $this->db->prepare($deleteSqlUserProfile);
+                $stmt->bindValue(':oldProfile', $userID);
+                $stmt->execute();
+                // $sqlSyntax = "SELECT * from user_profile up where up.userProfileType = "."$userId";
+                // $updateSql = "UPDATE USER_PROFILE SET userProfileType = '$updatedProfile'";
+                // mysqli_query($connection, $updateSql);
+                // mysqli_close($connection);
+                return true;
+            }
+        } catch (Exception $e) {
+            die('Failed to connect to the database: ' . mysqli_connect_error());
+        }
+    }
+
+    public function updateUserProfile($updatedProfile)
+    {
+        try {
+            $connection = $this->connect();
+            $checkSql = "SELECT * FROM USER_PROFILE WHERE userProfileType = '$updatedProfile'";
             $checkResult = mysqli_query($connection, $checkSql);
 
             // Check if a user with the same username exists
@@ -326,7 +335,7 @@ class User
                 echo "Username already exists. Please choose a different username.";
 
             } else {
-                $updateSql = "UPDATE USER_PROFILE SET userProfileType = '$updatedUsername'";
+                $updateSql = "UPDATE USER_PROFILE SET userProfileType = '$updatedProfile'";
                 mysqli_query($connection, $updateSql);
                 mysqli_close($connection);
                 return true;
@@ -440,10 +449,11 @@ class Profile
         if (mysqli_num_rows($result) > 0) {
           $row = mysqli_fetch_assoc($result);
           return new UserProfile(
-            $row['userProfileType']
+            $row['userProfileType'],
           );
         }
       }
+
 
     public function getUserProfiles()
     {
@@ -470,7 +480,7 @@ class Profile
 
         foreach ($result as $row) {
           $searchUser[] = new UserProfile(
-            $row['userProfileType']
+            $row['userProfileType'],
           );
         }
     
@@ -495,36 +505,6 @@ class Profile
         }
     }
 
-    public function retrieveAdminByUsername($username)
-    {
-        try {
-
-            $connection = $this->connect();
-
-            // Check for duplicate username
-            $checkQuery = "SELECT * FROM USER_ACCOUNT WHERE userName = '$username'";
-            $checkResult = mysqli_query($connection, $checkQuery);
-            return $checkResult;
-        } catch (Exception $e) {
-            die('Failed to connect to the database: ' . mysqli_connect_error());
-        }
-    }
-
-    public function retrieveAdminByEmail($userEmail)
-    {
-        try {
-
-            $connection = $this->connect();
-
-            // Check for duplicate userEmail
-            $checkQuery = "SELECT * FROM USER_ACCOUNT WHERE userEmail = '$userEmail'";
-            $checkResult = mysqli_query($connection, $checkQuery);
-            return $checkResult;
-        } catch (Exception $e) {
-            die('Failed to connect to the database: ' . mysqli_connect_error());
-        }
-    }
-
     public function retrieveProfile($userProfileType )
     {
         try {
@@ -540,24 +520,31 @@ class Profile
         }
     }
 
-
-    public function updateUserInfo($updatedUsername, $updatedPassword, $updatedEmail, $updatedProfile, $userID)
+    public function updateUserProfile($updatedProfile, $userID)
     {
         try {
             $connection = $this->connect();
 
-            $checkSql = "SELECT * FROM USER_ACCOUNT WHERE userName = '$updatedUsername' AND userID != '$userID'";
+            $checkSql = "SELECT * FROM USER_PROFILE WHERE userProfileType = '$userID'";
             $checkResult = mysqli_query($connection, $checkSql);
-
             // Check if a user with the same username exists
-            if (mysqli_num_rows($checkResult) > 0) {
+            if (mysqli_num_rows($checkResult) <= 0) {
                 // Display an error message or handle the duplicate username scenario as desired
                 echo "Username already exists. Please choose a different username.";
 
             } else {
-                $updateSql = "UPDATE USER_ACCOUNT SET userName = '$updatedUsername', userPassword = '$updatedPassword', userEmail = '$updatedEmail', userProfile = '$updatedProfile' WHERE userID = '$userID'";
-                mysqli_query($connection, $updateSql);
-                mysqli_close($connection);
+                $updateSqlUserProfile =  "UPDATE user_profile up
+                set up.userProfileType  = :newProfile 
+                where up.userProfileType = :oldProfile";
+
+                $stmt = $this->db->prepare($updateSqlUserProfile);
+                $stmt->bindValue(':oldProfile', $userID);
+                $stmt->bindValue(':newProfile', $updatedProfile);
+                $stmt->execute();
+                // $sqlSyntax = "SELECT * from user_profile up where up.userProfileType = "."$userId";
+                // $updateSql = "UPDATE USER_PROFILE SET userProfileType = '$updatedProfile'";
+                // mysqli_query($connection, $updateSql);
+                // mysqli_close($connection);
                 return true;
             }
         } catch (Exception $e) {
@@ -565,23 +552,28 @@ class Profile
         }
     }
 
-    public function updateUserProfile($updatedProfile)
+    public function DeleteUserProfile($updatedProfile, $userID)
     {
         try {
             $connection = $this->connect();
 
-            $checkSql = "SELECT * FROM USER_PROFILE WHERE userProfileType = '$updatedUsername'";
+            $checkSql = "SELECT * FROM USER_PROFILE WHERE userProfileType = '$userID'";
             $checkResult = mysqli_query($connection, $checkSql);
-
             // Check if a user with the same username exists
-            if (mysqli_num_rows($checkResult) > 0) {
+            if (mysqli_num_rows($checkResult) <= 0) {
                 // Display an error message or handle the duplicate username scenario as desired
                 echo "Username already exists. Please choose a different username.";
 
             } else {
-                $updateSql = "UPDATE USER_PROFILE SET userProfileType = '$updatedUsername'";
-                mysqli_query($connection, $updateSql);
-                mysqli_close($connection);
+                $deleteSqlUserProfile = "DELETE FROM user_profile WHERE userProfileType = :oldProfile";
+
+                $stmt = $this->db->prepare($deleteSqlUserProfile);
+                $stmt->bindValue(':oldProfile', $userID);
+                $stmt->execute();
+                // $sqlSyntax = "SELECT * from user_profile up where up.userProfileType = "."$userId";
+                // $updateSql = "UPDATE USER_PROFILE SET userProfileType = '$updatedProfile'";
+                // mysqli_query($connection, $updateSql);
+                // mysqli_close($connection);
                 return true;
             }
         } catch (Exception $e) {
@@ -589,20 +581,6 @@ class Profile
         }
     }
 
-    public function userDetails($username)
-    {
-        $query = "SELECT * FROM user_account WHERE userName = :username";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':username', $username);
-        $stmt->execute();
-
-        if ($stmt->rowCount() == 1) {
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return new UserAccount($result['userID'], $result['userName'], $result['userPassword'], $result['userProfile']);
-        } else {
-            return false;
-        }
-    }
 
     public function retrieveProfileTypes(){
         try {
@@ -663,14 +641,16 @@ class UserAccount
 
 class UserProfile
 {
+
     private $userProfileType;
 
-    public function __construct($type)
+    public function __construct($userProfileType)
     {
-        $this->userProfileType = $type;
+        $this->userProfileType = $userProfileType;
     }
 
-    public function getId()
+
+    public function getProfile()
     {
         return $this->userProfileType;
     }
