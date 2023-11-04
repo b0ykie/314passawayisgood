@@ -1,33 +1,6 @@
 <?php
   session_start();
   $username = $_SESSION['username'];
-  require_once 'createProfileController.php';
-  $adminController = new CreateProfileController();
-  $user = $adminController->onInit();
-
-  // Check if the form was submitted
-  if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Retrieve user input from the form
-    $userProfileType = $_POST['userProfileType'];
-
-    $resultRetrieve = $adminController->retrieveUserProfile($userProfileType);
-    
-    // Execute the query
-    if (mysqli_num_rows($resultRetrieve) > 0) {
-      echo "<script>alert('Error: The profile type already exists.');</script>";
-    } 
-    else {
-      $result = $adminController->addNewUserProfile($userProfileType);
-      if ($result == true){
-        echo "<script>alert('New profile created successfully.');</script>";
-      }
-    }
-  }
-
-  // Retrieve existing profile types from the database
-    $profileTypes = $adminController->getProfileTypes();
-
-  // Close the database connection
 ?>
 
 <!DOCTYPE html>
@@ -35,10 +8,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create User Profile</title>
+    <title>Create User Account</title>
     <link rel="stylesheet" href="../../style.css">
   </head>
-
   <body>
     <!-- HEADER SECTION -->
     <header>
@@ -48,14 +20,13 @@
 
       <nav>
       <ul>
-      <li><a href="adminhomeBoundary.php">Home</a></li>
+          <li><a href="adminhomeBoundary.php">Home</a></li>
           <li><a href="adminUsersBoundary.php">View User Accounts</a></li>
           <li><a href="createUsersBoundary.php">Create User Account</a></li>
           <li><a href="adminProfilesBoundary.php">View User Profile</a></li>
           <li><a href="createProfileBoundary.php">Create User Profile </a></li>
           <li><a href="adminRoleBoundary.php">View Cafe Role Assignments</a></li>
           <li><a href="assignRoleBoundary.php">Assign Cafe Role To Profile</a></li>
-
         </ul>
       </nav>
 
@@ -71,12 +42,29 @@
     <!-- MAIN CONTENT SECTION -->
     <main>
       <div class="loginContain">
-        <form method="POST" action="createProfileBoundary.php">
-          <h1>Create User Profile</h1>
-          <label for="userProfileType">User Profile Type:</label>
-          <input type="text" name="userProfileType" id="userProfileType" required>
+        <form method="POST" action="assignRoleController.php">
+          <h1>Assign Role to Existing Staff</h1>
+          <label for="userName">Existing Staff Username:</label>
+          <input type="text" name="userName" id="userName" required>
 
-          <button type="submit" name="login">Create User Profile</button>
+          <!-- <label for="userPassword">Password:</label>
+          <input type="password" name="userPassword" id="userPassword" required> -->
+
+          <!-- <label for="userEmail">Email:</label>
+          <input type="email" name="userEmail" id="userEmail" required> -->
+
+          <!-- <label for="userProfile">Profile:</label>
+          <input type="text" name="userProfile" id="userProfile" required> -->
+
+          <label for="confirm-role">Role:</label>
+            <select name="userEmail" id="userEmail" required>
+                <option value="--- Choose a role ---">--- Choose a role ---</option>
+                <option value="chef">chef</option>
+                <option value="cashier">cashier</option>
+                <option value="waiter">waiter</option>
+            </select>
+
+          <button type="submit" name="login">Assign Role</button>
         </form>
       </div>
     </main>

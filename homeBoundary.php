@@ -1,8 +1,6 @@
 <?php
-  require_once 'homeController.php';
-
-  $home = new homeController();
-
+  // require_once 'homeController.php';
+  // $home = new homeController();
 ?>
 
 <!DOCTYPE html>

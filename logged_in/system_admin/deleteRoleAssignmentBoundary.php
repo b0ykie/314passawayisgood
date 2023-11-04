@@ -1,12 +1,12 @@
 <?php
-require_once 'deleteSlotsController.php';
+require_once 'deleteRoleAssignmentController.php';
 session_start();
 
 $username = $_SESSION['username'];
 
 if (isset($_GET['id'])) {
     $userID = $_GET['id'];
-    $userController = new DeleteSlotController();
+    $userController = new DeleteRoleAssignmentController();
     $user = $userController->onInit($userID);
 
     if ($user !== null) {
@@ -20,11 +20,14 @@ if (isset($_GET['id'])) {
             <link rel="stylesheet" href="admin.css">
         </head>
         <body>
-            <form method="POST" action="deleteSlotsController.php">
-                <input type="hidden" name="id" value="<?php echo $user->getId(); ?>">
+            <form method="POST" action="deleteRoleAssignmentController.php">
+                <input type="hidden" name="id" value="<?php echo $user->getStaffID(); ?>">
 
-                <label for="profile">slotDate:</label>
-                <input type="text" name="profile" value="<?php echo $user->getSlotDate(); ?>" readonly><br>
+                <label for="profile">userID:</label>
+                <input type="text" name="profile" value="<?php echo $user->getUserID(); ?>" readonly><br>
+
+                <label for="profile">staffRole:</label>
+                <input type="text" name="profile" value="<?php echo $user->getStaffRole(); ?>" readonly><br>
 
                 <input type="submit" value="Delete">
             </form>
@@ -35,6 +38,6 @@ if (isset($_GET['id'])) {
         echo "User not found.";
     }
 } else {
-    echo "Invalid user ID.";
+    echo "Invalid profile.";
 }
 ?>

@@ -34,7 +34,8 @@
           <li><a href="createUsersBoundary.php">Create User Account</a></li>
           <li><a href="adminProfilesBoundary.php">View User Profile</a></li>
           <li><a href="createProfileBoundary.php">Create User Profile </a></li>
-
+          <li><a href="adminProfilesBoundary.php">View Cafe Role Assignments</a></li>
+          <li><a href="assignRoleBoundary.php">Assign Cafe Role To Profile</a></li>
         </ul>
       </nav>
 
@@ -65,7 +66,7 @@
 
         if ($resultSearch != FALSE) {
           echo "<table>";
-          echo "<tr><th>Username</th><th>Password</th><th>Email</th><th>Profile</th><th>Action</th></tr>";
+          echo "<tr><th>Username</th><th>Password</th><th>Email</th><th>Profile</th><th>Action</th><th>Action</th></tr>";
 
           // Output data of each user
           foreach ($resultSearch as $row) {
@@ -75,6 +76,7 @@
             echo "<td>" . $row->getEmail() . "</td>";
             echo "<td>" . $row->getRole() . "</td>";
             echo "<td><a href='updateUserBoundary.php?id=" . $row->getId() . "'>Edit</a></td>";
+            echo "<td><a href='deleteUserBoundary.php?id=" . $row->getId() . "'>Delete</a></td>";
             echo "</tr>";
           }
           echo "</table>";

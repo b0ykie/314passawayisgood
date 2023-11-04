@@ -51,12 +51,13 @@
 
       <nav>
       <ul>
-          <li><a href="adminhomeBoundary.php">Home</a></li>
+      <li><a href="adminhomeBoundary.php">Home</a></li>
           <li><a href="adminUsersBoundary.php">View User Accounts</a></li>
           <li><a href="createUsersBoundary.php">Create User Account</a></li>
           <li><a href="adminProfilesBoundary.php">View User Profile</a></li>
           <li><a href="createProfileBoundary.php">Create User Profile </a></li>
-
+          <li><a href="adminRoleBoundary.php">View Cafe Role Assignments</a></li>
+          <li><a href="assignRoleBoundary.php">Assign Cafe Role To Profile</a></li>
         </ul>
       </nav>
 
