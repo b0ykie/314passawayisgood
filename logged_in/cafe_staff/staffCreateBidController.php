@@ -34,10 +34,10 @@
             // Update the user information
             $userEntity = new SlotBid();
             if ($userEntity->createSlotBid($username, $userrole, $slotdate)) {
-                $message = "Bid submitted successfully!";
-                header("Location: staffViewSlotsBoundary.php?message=" . urlencode($message));
+                // $message = "Bid submitted successfully!";
+                // header("Location: staffViewSlotsBoundary.php?message=" . urlencode($message));
                 // Redirect the user back to the users page after the update
-                // header("Location: staffhomeBoundary.php");
+                header("Location: staffViewSlotsBoundary.php");
                 exit();
             }
         } else {

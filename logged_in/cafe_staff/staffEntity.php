@@ -178,8 +178,14 @@
 
         public function createSlotBid($username, $userrole, $slotdate)
         {
-            $stmt = $this->db->prepare('INSERT INTO bidding_table (staff_id, role, slot_id) VALUES (:username, :userrole, :slotdate)');
-            $stmt->execute(array(':username' => $username, ':userrole' => $userrole, ':slotdate' => $slotdate));
+            try {
+                $stmt = $this->db->prepare('INSERT INTO bidding_table (staff_id, role, slot_id) VALUES (:username, :userrole, :slotdate)');
+                $stmt->execute(array(':username' => $username, ':userrole' => $userrole, ':slotdate' => $slotdate));
+                return true;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . mysqli_connect_error());
+            }
+            
         }
 
         public function getUserPendingBids($userID, $userrole)
