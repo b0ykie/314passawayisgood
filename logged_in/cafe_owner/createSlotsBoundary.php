@@ -3,7 +3,7 @@
   $username = $_SESSION['username'];
   require_once 'createSlotsController.php';
   $adminController = new CreateSlotsController();
-  $user = $adminController->onInit();
+  $user = $adminController->onInit($username);
 
   // Check if the form was submitted
   if ($_SERVER["REQUEST_METHOD"] === "POST") {

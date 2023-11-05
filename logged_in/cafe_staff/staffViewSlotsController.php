@@ -1,20 +1,18 @@
 <?php
-
-require_once 'slotEntity.php';
-
-class OwnerSlotsController
+class staffViewSlotsController
 {
     public function onInit($username)
     {
-        $user = new Slots();
+        require_once 'staffEntity.php';
 
+        $user = new Slots();
         return $user->getWorkSlots($username);
     }
 
-    public function searchSlots($searchKeyword)
+    public function searchSlots($userID, $searchKeyword)
     {
         $user = new Slots();
-        $searchUser = $user->searchSlots($searchKeyword);
+        $searchUser = $user->searchSlots($userID, $searchKeyword);
 
         if (!empty($searchUser)) {
             return $searchUser;
@@ -24,5 +22,5 @@ class OwnerSlotsController
         }
     }
 }
+
 ?>
-  

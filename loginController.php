@@ -25,8 +25,8 @@
                 // Successful login
                 
                 switch ($result->getRole()) {
-                    case 'customer':
-                        header('Location: logged_in/cinema_customer/cushomeBoundary.php');
+                    case 'staff':
+                        header('Location: logged_in/cafe_staff/staffhomeBoundary.php');
                         exit();
                     case 'admin':
                         header('Location: logged_in/system_admin/adminhomeBoundary.php');

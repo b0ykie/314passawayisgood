@@ -101,12 +101,12 @@
         }
     }
 
-    public function getWorkSlots()
+    public function getWorkSlots($username)
     {
         try {
             $connection = $this->connect();
             // Retrieve user records from the database
-            $sql = "SELECT * FROM WORK_SLOT";
+            $sql = "SELECT * FROM WORK_SLOT WHERE ownerID = '$username'";
             $result = mysqli_query($connection, $sql);
             mysqli_close($connection);
             return $result;
@@ -137,7 +137,7 @@
   
       mysqli_close($connection);
       return $searchUser;
-  }
+    }
 
     public function insertNewSlot($ownerID, $userName, $userPassword, $userEmail, $userProfile)
     {
@@ -156,29 +156,6 @@
 
         }
     }
-
-    //update to book_fnb DB.
-    public function addToBookFnbDB($fbNameVal, $fbCostVal, $fbLoyalty_PtsVal, $fnb_movie_screening_dateVal, $fbBookByVal){
-      try {
-        $query = "INSERT INTO book_fnb (fbName, fbCost, fbLoyalty_Pts, fnb_movie_screening_date, fbBookBy) 
-                  VALUES (:fbNameVal, :fbCostVal, :fbLoyalty_PtsVal, :fnb_movie_screening_dateVal, :fbBookByVal)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':fbNameVal', $fbNameVal);
-        $stmt->bindValue(':fbCostVal', $fbCostVal);
-        $stmt->bindValue(':fbLoyalty_PtsVal', $fbLoyalty_PtsVal);
-        $stmt->bindValue(':fnb_movie_screening_dateVal', $fnb_movie_screening_dateVal);
-        $stmt->bindValue(':fbBookByVal', $fbBookByVal);
-        $stmt->execute();
-
-        // Optionally, you can return the ID of the inserted record if needed
-        return $this->db->lastInsertId();
-        
-    } catch (Exception $e) {
-        echo "addToBookFnbDB failed: " . $e->getMessage();
-    }
-    }
-
-
 
   } 
     
