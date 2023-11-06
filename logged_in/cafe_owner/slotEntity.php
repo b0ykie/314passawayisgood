@@ -34,7 +34,8 @@
           $row['chefSlot'],
           $row['cashierSlot'],
           $row['waiterSlot'],
-          $row['slotDate']
+          $row['slotDate'],
+          $row['managerID']
         );
       }
     }
@@ -131,7 +132,8 @@
           $row['chefSlot'],
           $row['cashierSlot'],
           $row['waiterSlot'],
-          $row['slotDate']
+          $row['slotDate'],
+          $row['managerID']
         );
       }
   
@@ -139,13 +141,13 @@
       return $searchUser;
     }
 
-    public function insertNewSlot($ownerID, $userName, $userPassword, $userEmail, $userProfile)
+    public function insertNewSlot($ownerID, $userName, $userPassword, $userEmail, $userProfile, $placeholderManager)
     {
         try {
             $connection = $this->connect();
 
-            $insertQuery = "INSERT INTO WORK_SLOT (ownerID , chefSlot, cashierSlot, waiterSlot, slotDate) 
-            VALUES ('$ownerID', '$userName', '$userPassword', '$userEmail', '$userProfile')";
+            $insertQuery = "INSERT INTO WORK_SLOT (ownerID , chefSlot, cashierSlot, waiterSlot, slotDate, managerID) 
+            VALUES ('$ownerID', '$userName', '$userPassword', '$userEmail', '$userProfile', '$placeholderManager')";
 
             mysqli_query($connection, $insertQuery);
             mysqli_close($connection);
@@ -168,8 +170,9 @@
     private $cashierSlot;
     private $waiterSlot;
     private $slotDate;
+    private $managerID;
 
-    public function __construct($slotID, $ownerID, $chefSlot, $cashierSlot, $waiterSlot, $slotDate)
+    public function __construct($slotID, $ownerID, $chefSlot, $cashierSlot, $waiterSlot, $slotDate, $managerID)
     {
         $this->slotID = $slotID;
         $this->ownerID = $ownerID;
@@ -177,6 +180,7 @@
         $this->cashierSlot = $cashierSlot;
         $this->waiterSlot = $waiterSlot;
         $this->slotDate = $slotDate;
+        $this->managerID = $managerID;
     }
 
     public function getId()
@@ -205,7 +209,10 @@
 
     public function getSlotDate(){
       return $this->slotDate;
-  }
+    }
 
+    public function getManagerID(){
+        return $this->managerID;
+      }
 }
 ?>      

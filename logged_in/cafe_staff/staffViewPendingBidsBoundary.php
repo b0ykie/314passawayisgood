@@ -66,12 +66,13 @@
 
         if ($resultSearch != FALSE) {
           echo "<table>";
-          echo "<tr><th>slotDate</th><th>role</th><th>bidding_status</th></tr>";
+          echo "<tr><th>slotDate</th><th>shiftManager</th><th>role</th><th>bidding_status</th></tr>";
 
           // Output data of each user
           foreach ($resultSearch as $row) {
             echo "<tr>";
             echo "<td>" . $row->getSlotID() . "</td>";
+            echo "<td>" . $row->getManagerID() . "</td>";
             echo "<td>" . $row->getRole() . "</td>";
             echo "<td>" . $row->getBiddingStatus() . "</td>";
             // echo "<td><a href='updateUserBoundary.php?id=" . $row->getStaffID() . "'>Edit</a></td>";
@@ -86,12 +87,13 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>slotDate</th><th>role</th><th>bidding_status</th></tr>";
+          echo "<tr><th>slotDate</th><th>shiftManager</th><th>role</th><th>bidding_status</th></tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . $row['slot_id'] . "</td>";
+            echo "<td>" . $row['managed_by'] . "</td>";
             echo "<td>" . $row['role'] . "</td>";
             echo "<td>" . $row['bidding_status'] . "</td>";
             // echo "<td><a href='updateUserBoundary.php?id=" . $row['staffID'] . "'>Edit</a></td>";

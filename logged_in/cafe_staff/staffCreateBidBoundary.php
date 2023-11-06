@@ -10,6 +10,7 @@ if (isset($_GET['id'])) {
     $userController = new staffCreateBidController();
     $user = $userController->onInit($slotID);
     $date = $userController->getDate($slotID);
+    $manager = $userController->getManager($slotID);
 
     if ($user !== null) {
         ?>
@@ -33,6 +34,9 @@ if (isset($_GET['id'])) {
 
                 <label for="slotdate">slotDate:</label>
                 <input type="text" name="slotdate" value="<?php echo $date ?>" readonly><br>
+
+                <label for="slotdate">CafeManager:</label>
+                <input type="text" name="managerid" value="<?php echo $manager ?>" readonly><br>
 
                 <input type="submit" value="Bid">
             </form>

@@ -12,6 +12,11 @@
             $slotDate = $userEntity->getWorkSlotDate($slotID);
             return $slotDate;
         }
+        public function getManager($slotID) {
+            $userEntity = new Slots();
+            $slotManager = $userEntity->getWorkSlotManager($slotID);
+            return $slotManager;
+        }
     }
 
     // Check if the user ID is provided in the form submission
@@ -30,12 +35,11 @@
             $username = $_POST['username'];
             $userrole = $_POST['userrole'];
             $slotdate = $_POST['slotdate'];
+            $slotmanager = $_POST['managerid'];
     
             // Update the user information
             $userEntity = new SlotBid();
-            if ($userEntity->createSlotBid($username, $userrole, $slotdate)) {
-                // $message = "Bid submitted successfully!";
-                // header("Location: staffViewSlotsBoundary.php?message=" . urlencode($message));
+            if ($userEntity->createSlotBid($username, $userrole, $slotdate, $slotmanager)) {
                 // Redirect the user back to the users page after the update
                 header("Location: staffViewSlotsBoundary.php");
                 exit();

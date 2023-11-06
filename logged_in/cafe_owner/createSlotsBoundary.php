@@ -13,6 +13,7 @@
     $userPassword = 0; //Manager will determine the slots
     $userEmail = 0; //Manager will determine the slots
     $userProfile = $_POST['userProfile'];
+    $placeholderManager = "dummymanager";
 
     // // Check if the username already exists
     // $checkResult = $adminController->checkDuplicateByUsername($userName);
@@ -24,7 +25,7 @@
     // } else {
     //   // Prepare the SQL query to insert a new user
 
-      $check = $adminController->addNewSlot($ownerID, $userName, $userPassword,$userEmail,$userProfile);
+      $check = $adminController->addNewSlot($ownerID, $userName, $userPassword,$userEmail,$userProfile, $placeholderManager);
     
       if ($check == true) {
         echo "<script>alert('New user created successfully.');</script>";

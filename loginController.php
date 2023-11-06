@@ -35,7 +35,7 @@
                         header('Location: logged_in/cafe_owner/ownerhomeBoundary.php');
                         exit();
                     case 'manager':
-                        header('Location: logged_in/cinema_manager/managerhomeBoundary.php');
+                        header('Location: logged_in/cafe_manager/managerhomeBoundary.php');
                         exit();
                     default:
                         // Invalid role

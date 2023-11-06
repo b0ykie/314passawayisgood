@@ -10,12 +10,12 @@ class CreateSlotsController
         return $user->getWorkSlots($username);
     }
 
-    public function addNewSlot($ownerID, $userName, $userPassword, $userEmail, $userProfile)
+    public function addNewSlot($ownerID, $userName, $userPassword, $userEmail, $userProfile, $placeholderManager)
     {
         require_once 'slotEntity.php';
 
         $user = new Slots();
-        $check = $user->insertNewSlot($ownerID, $userName, $userPassword,$userEmail,$userProfile);
+        $check = $user->insertNewSlot($ownerID, $userName, $userPassword,$userEmail,$userProfile, $placeholderManager);
 
         return $check;
     }

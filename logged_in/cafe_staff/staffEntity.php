@@ -96,6 +96,27 @@
             }
         }
 
+        public function getWorkSlotManager($slotID)
+        {
+            try {
+                $connection = $this->connect();
+                $sql = "SELECT managerID FROM WORK_SLOT ws
+                        where ws.slotID = '$slotID'";
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result); // Fetch the row as an associative array
+                    if ($row) {
+                        $slotDate = $row['managerID']; // Access the 'staffRole' value from the array
+                        return $slotDate;
+                    }
+                }
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . mysqli_connect_error());
+            }
+        }
+
         public function getWorkSlots($userID)
         {
             try {
@@ -103,7 +124,8 @@
                 $sql = "SELECT ws.*
                         FROM WORK_SLOT ws
                         LEFT JOIN bidding_table bt ON ws.slotDate = bt.slot_id AND bt.staff_id = '$userID'
-                        WHERE bt.staff_id IS NULL";
+                        WHERE bt.staff_id IS NULL
+                        AND (ws.managerID IS NULL OR ws.managerID <> 'dummymanager')";
                 $result = mysqli_query($connection, $sql);
                 mysqli_close($connection);
                 return $result;
@@ -119,6 +141,7 @@
                     FROM WORK_SLOT ws
                     LEFT JOIN bidding_table bt ON ws.slotDate = bt.slot_id AND bt.staff_id = '$userID'
                     WHERE bt.staff_id IS NULL
+                    AND (ws.managerID IS NULL OR ws.managerID <> 'dummymanager')
                     AND ws.slotDate LIKE '%$searchKeyword%'";
             $result = mysqli_query($connection, $sql);
       
@@ -131,7 +154,8 @@
                 $row['chefSlot'],
                 $row['cashierSlot'],
                 $row['waiterSlot'],
-                $row['slotDate']
+                $row['slotDate'],
+                $row['managerID']
               );
             }
         
@@ -176,11 +200,11 @@
             }
         }
 
-        public function createSlotBid($username, $userrole, $slotdate)
+        public function createSlotBid($username, $userrole, $slotdate, $slotmanager)
         {
             try {
-                $stmt = $this->db->prepare('INSERT INTO bidding_table (staff_id, role, slot_id) VALUES (:username, :userrole, :slotdate)');
-                $stmt->execute(array(':username' => $username, ':userrole' => $userrole, ':slotdate' => $slotdate));
+                $stmt = $this->db->prepare('INSERT INTO bidding_table (staff_id, role, slot_id, managed_by) VALUES (:username, :userrole, :slotdate, :managerID)');
+                $stmt->execute(array(':username' => $username, ':userrole' => $userrole, ':slotdate' => $slotdate, ':managerID' => $slotmanager));
                 return true;
             } catch (Exception $e) {
                 die('Failed to connect to the database: ' . mysqli_connect_error());
@@ -223,7 +247,8 @@
                 $row['staff_id'],
                 $row['bidding_status'],
                 $row['role'],
-                $row['slot_id']
+                $row['slot_id'],
+                $row['managed_by']
               );
             }
         
@@ -266,7 +291,8 @@
                 $row['staff_id'],
                 $row['bidding_status'],
                 $row['role'],
-                $row['slot_id']
+                $row['slot_id'],
+                $row['managed_by']
               );
             }
         
@@ -309,7 +335,8 @@
                 $row['staff_id'],
                 $row['bidding_status'],
                 $row['role'],
-                $row['slot_id']
+                $row['slot_id'],
+                $row['managed_by']
               );
             }
         
@@ -325,14 +352,16 @@
         private $biddingStatus;
         private $role;
         private $slotID;
+        private $managerID;
 
-        public function __construct($bidID, $staffID, $biddingStatus, $role, $slotID)
+        public function __construct($bidID, $staffID, $biddingStatus, $role, $slotID, $managerID)
         {
             $this->bidID = $bidID;
             $this->staffID = $staffID;
             $this->biddingStatus = $biddingStatus;
             $this->role = $role;
             $this->slotID = $slotID;
+            $this->managerID = $managerID;
         }
 
         public function getBidID()
@@ -357,7 +386,11 @@
 
         public function getSlotID(){
             return $this->slotID;
-        } 
+        }
+
+        public function getManagerID(){
+            return $this->managerID;
+        }
     }
 
     class WorkSlot
@@ -368,8 +401,9 @@
         private $cashierSlot;
         private $waiterSlot;
         private $slotDate;
-    
-        public function __construct($slotID, $ownerID, $chefSlot, $cashierSlot, $waiterSlot, $slotDate)
+        private $managerID;
+
+        public function __construct($slotID, $ownerID, $chefSlot, $cashierSlot, $waiterSlot, $slotDate, $managerID)
         {
             $this->slotID = $slotID;
             $this->ownerID = $ownerID;
@@ -377,35 +411,39 @@
             $this->cashierSlot = $cashierSlot;
             $this->waiterSlot = $waiterSlot;
             $this->slotDate = $slotDate;
+            $this->managerID = $managerID;
         }
-    
+
         public function getId()
         {
             return $this->slotID;
         }
-    
+
         public function getOwnerID()
         {
             return $this->ownerID;
         }
-    
+
         public function getChefSlot()
         {
             return $this->chefSlot;
         }
-    
+
         public function getCashierSlot()
         {
             return $this->cashierSlot;
         }
-    
+
         public function getWaiterSlot(){
             return $this->waiterSlot;
         }
-    
+
         public function getSlotDate(){
-          return $this->slotDate;
-      }
-    
+        return $this->slotDate;
+        }
+
+        public function getManagerID(){
+            return $this->managerID;
+        }
     }
 ?>
