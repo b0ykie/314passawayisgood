@@ -1,6 +1,7 @@
 <?php
   session_start();
   $username = $_SESSION['username'];
+  // $slotID = $_GET['id'];
 
   require_once 'managerViewSlotsController.php';
   $managerViewSlotsController = new managerViewSlotsController();

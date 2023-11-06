@@ -73,7 +73,7 @@
             echo "<td>" . $row->getCashierSlot() . "</td>";
             echo "<td>" . $row->getWaiterSlot() . "</td>";
             echo "<td><a href='managerEditIcSlotBoundary.php?id=" . $row->getId() . "'>Edit</a></td>";
-            echo "<td><a href='managerTakeSlotBoundary.php?id=" . $row->getId() . "'>View</a></td>";
+            echo "<td><a href='managerViewSlotSpecificsBoundary.php?id=" . $row->getId() . "'>View</a></td>";
             echo "</tr>";
           }
           echo "</table>";
@@ -94,7 +94,7 @@
             echo "<td>" . $row['cashierSlot'] . "</td>";
             echo "<td>" . $row['waiterSlot'] . "</td>";
             echo "<td><a href='managerEditIcSlotBoundary.php?id=" . $row['slotID'] . "'>Edit</a></td>";
-            echo "<td><a href='managerTakeSlotBoundary.php?id=" . $row['slotID'] . "'>View</a></td>";
+            echo "<td><a href='managerViewSlotSpecificsBoundary.php?id=" . $row['slotID'] . "'>View</a></td>";
             echo "</tr>";
           }
           echo "</table>";

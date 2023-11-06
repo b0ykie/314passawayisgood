@@ -36,3 +36,7 @@
   input[type="submit"]:hover {
     background-color: #45a049;
   }
+
+  h3 {
+    display: inline-block;
+  }
