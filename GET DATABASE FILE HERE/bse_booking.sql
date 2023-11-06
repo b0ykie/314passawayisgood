@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2023 at 10:40 AM
+-- Generation Time: Nov 06, 2023 at 07:38 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -35,15 +35,6 @@ CREATE TABLE `bidding_table` (
   `slot_id` varchar(30) NOT NULL,
   `managed_by` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `bidding_table`
---
-
-INSERT INTO `bidding_table` (`id`, `staff_id`, `bidding_status`, `role`, `slot_id`, `managed_by`) VALUES
-(3, 'vandalim', 'rejected', 'chef', '11/11/11', 'cafemanager'),
-(4, 'vandalim', 'approved', 'chef', '88/88/88', 'cafemanager2'),
-(5, 'vandalim', 'pending', 'chef', '44/44/44', 'cafemanager');
 
 -- --------------------------------------------------------
 
@@ -155,14 +146,11 @@ CREATE TABLE `work_slot` (
 --
 
 INSERT INTO `work_slot` (`slotID`, `ownerID`, `chefSlot`, `cashierSlot`, `waiterSlot`, `slotDate`, `managerID`) VALUES
-(20, 'cafeowner', 3, 3, 3, '11/11/11', 'cafemanager'),
-(21, 'cafeowner', 0, 0, 0, '22/22/22', 'dummymanager'),
-(22, 'cafeowner', 0, 0, 0, '33/33/33', 'dummymanager'),
-(23, 'cafeowner', 6, 6, 6, '44/44/44', 'cafemanager'),
+(20, 'cafeowner', 0, 0, 0, '11/11/11', 'cafemanager'),
 (24, 'cafeowner', 0, 0, 0, '55/55/55', 'dummymanager'),
 (25, 'cafeowner', 0, 0, 0, '66/66/66', 'dummymanager'),
 (26, 'cafeowner', 0, 0, 0, '77/77/77', 'dummymanager'),
-(27, 'cafeowner', 0, 0, 0, '88/88/88', 'cafemanager2');
+(27, 'cafeowner', 0, 0, 0, '88/88/88', 'dummymanager');
 
 --
 -- Indexes for dumped tables
@@ -223,7 +211,7 @@ ALTER TABLE `work_slot`
 -- AUTO_INCREMENT for table `bidding_table`
 --
 ALTER TABLE `bidding_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user_account`

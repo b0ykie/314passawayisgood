@@ -1,15 +1,18 @@
 <?php
   session_start();
-  $username = $_SESSION['username'];
+  $managerID = $_SESSION['username'];
+  $slotID = $_GET['id'];
 
-  require_once 'managerViewIcSlotsController.php';
-  $managerViewIcSlotsController = new managerViewIcSlotsController();
+  require_once 'managerViewSlotsRejectedController.php';
+  $managerViewSlotsRejectedController = new managerViewSlotsRejectedController();
+  $date = $managerViewSlotsRejectedController->getSlotDate($slotID);
 
   // Check if a search keyword is provided
   $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Call the searchUsers method with the search keyword
-  $result = $managerViewIcSlotsController->onInit($username);
+  $result = $managerViewSlotsRejectedController->onInit($date);
+  
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +40,7 @@
       </nav>
 
       <div class="welcome">
-        <h2>Welcome Back <?php echo $username; ?> </h2>
+        <h2>Welcome Back <?php echo $managerID; ?> </h2>
       </div>
 
       <div class="user-actions">
@@ -57,25 +60,20 @@
       </div>
       <?php
       if (isset($_POST['submit'])) {
-        $username = $_SESSION['username'];
         $searchKeyword = $_POST['search'];
-        $resultSearch = $managerViewIcSlotsController->searchIcSlots($searchKeyword, $username);
+        $resultSearch = $managerViewSlotsRejectedController->searchRejectedBids($date, $searchKeyword);
 
         if ($resultSearch != FALSE) {
           echo "<table>";
-          echo "<tr><th>slotDate</th><th>chefSlot</th><th>cashierSlot</th><th>waiterSlot</th><th>Action</th><th>Pending</th><th>Approved</th><th>Rejected</th></tr>";
+          echo "<tr><th>staffName</th><th>Role</th></tr>";
 
           // Output data of each user
           foreach ($resultSearch as $row) {
             echo "<tr>";
-            echo "<td>" . $row->getSlotDate() . "</td>";
-            echo "<td>" . $row->getChefSlot() . "</td>";
-            echo "<td>" . $row->getCashierSlot() . "</td>";
-            echo "<td>" . $row->getWaiterSlot() . "</td>";
-            echo "<td><a href='managerEditIcSlotBoundary.php?id=" . $row->getId() . "'>Edit</a></td>";
-            echo "<td><a href='managerViewSlotsPendingBoundary.php?id=" . $row->getId() . "'>Pending</a></td>";
-            echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row->getId() . "'>Approved</a></td>";
-            echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row->getId() . "'>Rejected</a></td>";
+            echo "<td>" . $row['staff_id'] . "</td>";
+            echo "<td>" . $row['role'] . "</td>";
+            // echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
+            // echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
             echo "</tr>";
           }
           echo "</table>";
@@ -86,19 +84,15 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>slotDate</th><th>chefSlot</th><th>cashierSlot</th><th>waiterSlot</th><th>Action</th><th>Pending</th><th>Approved</th><th>Rejected</th></tr>";
+          echo "<tr><th>staffName</th><th>Role</th></tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
-            echo "<td>" . $row['slotDate'] . "</td>";
-            echo "<td>" . $row['chefSlot'] . "</td>";
-            echo "<td>" . $row['cashierSlot'] . "</td>";
-            echo "<td>" . $row['waiterSlot'] . "</td>";
-            echo "<td><a href='managerEditIcSlotBoundary.php?id=" . $row['slotID'] . "'>Edit</a></td>";
-            echo "<td><a href='managerViewSlotsPendingBoundary.php?id=" . $row['slotID'] . "'>Pending</a></td>";
-            echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['slotID'] . "'>Approved</a></td>";
-            echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['slotID'] . "'>Rejected</a></td>";
+            echo "<td>" . $row['staff_id'] . "</td>";
+            echo "<td>" . $row['role'] . "</td>";
+            // echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
+            // echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
             echo "</tr>";
           }
           echo "</table>";

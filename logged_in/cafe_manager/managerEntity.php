@@ -228,9 +228,8 @@
             $row['managerID']
             );
         }
-    
-        mysqli_close($connection);
-        return $searchUser;
+            mysqli_close($connection);
+            return $searchUser;
         }
 
         public function updateIcSlot($newChefSlot, $newCashierSlot, $newWaiterSlot, $slotID)
@@ -264,59 +263,268 @@
             }
         }
 
-}
+        public function getSlotDate($slotID)
+        {
+            try {
+                $connection = $this->connect();
+                $sql = "SELECT slotDate FROM WORK_SLOT ws
+                        where ws.slotID = '$slotID'";
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . mysqli_connect_error());
+            }
+        }
+
+    }
+
+    class Bids 
+    {
+        private $db;
+
+        public function __construct()
+        {
+            $this->db = new PDO('mysql:host=localhost;dbname=bse_booking', 'root', '');
+        }
+    
+        private function connect()
+        {
+            $hostname = 'localhost';
+            $username = 'root';
+            $password = '';
+            $database = 'bse_booking';
+    
+            // Create a connection
+            $connection = mysqli_connect($hostname, $username, $password, $database);
+    
+            return $connection;
+        }
+
+        public function getPendingBids($slotID)
+        {
+            try {
+                $status = 'pending';
+                $connection = $this->connect();
+                // SQL query to retrieve pending bids for the specified work slot
+                $sql = "SELECT ua.userEmail, bt.*, ua.userName
+                        FROM bidding_table bt
+                        INNER JOIN user_account ua 
+                        ON ua.userName = bt.staff_id 
+                        WHERE bt.slot_id = '$slotID'
+                        AND bt.bidding_status = '$status'";
+                        
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
+        public function getApprovedBids($slotID)
+        {
+            try {
+                $status = 'approved';
+                $connection = $this->connect();
+                // SQL query to retrieve pending bids for the specified work slot
+                $sql = "SELECT ua.userEmail, bt.*, ua.userName
+                        FROM bidding_table bt
+                        INNER JOIN user_account ua 
+                        ON ua.userName = bt.staff_id 
+                        WHERE bt.slot_id = '$slotID'
+                        AND bt.bidding_status = '$status'";
+                        
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
+        public function getRejectedBids($slotID)
+        {
+            try {
+                $status = 'rejected';
+                $connection = $this->connect();
+                // SQL query to retrieve pending bids for the specified work slot
+                $sql = "SELECT ua.userEmail, bt.*, ua.userName
+                        FROM bidding_table bt
+                        INNER JOIN user_account ua 
+                        ON ua.userName = bt.staff_id 
+                        WHERE bt.slot_id = '$slotID'
+                        AND bt.bidding_status = '$status'";
+                        
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
+        public function searchApprovedBids($slotDate, $searchKeyword)
+        {
+            try {
+                $connection = $this->connect();
+                $status = 'approved';
+                $sql = "SELECT bt.staff_id , bt.`role`, bt.id
+                        FROM bidding_table bt
+                        INNER JOIN user_account ua 
+                        ON ua.userName = bt.staff_id 
+                        WHERE bt.slot_id = '$slotDate'
+                        AND bt.bidding_status = '$status'
+                        and bt.staff_id LIKE '%$searchKeyword%'";
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }    
+        }
+
+        public function searchPendingBids($slotDate, $searchKeyword)
+        {
+            try {
+                $connection = $this->connect();
+                $status = 'pending';
+                $sql = "SELECT bt.staff_id , bt.`role`, bt.id
+                        FROM bidding_table bt
+                        INNER JOIN user_account ua 
+                        ON ua.userName = bt.staff_id 
+                        WHERE bt.slot_id = '$slotDate'
+                        AND bt.bidding_status = '$status'
+                        and bt.staff_id LIKE '%$searchKeyword%'";
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }    
+        }
+
+        public function searchRejectedBids($slotDate, $searchKeyword)
+        {
+            try {
+                $connection = $this->connect();
+                $status = 'rejected';
+                $sql = "SELECT bt.staff_id , bt.`role`, bt.id
+                        FROM bidding_table bt
+                        INNER JOIN user_account ua 
+                        ON ua.userName = bt.staff_id 
+                        WHERE bt.slot_id = '$slotDate'
+                        AND bt.bidding_status = '$status'
+                        and bt.staff_id LIKE '%$searchKeyword%'";
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }    
+        }
+
+    }
 
     class WorkSlot
     {
-    private $slotID;
-    private $ownerID;
-    private $chefSlot;
-    private $cashierSlot;
-    private $waiterSlot;
-    private $slotDate;
-    private $managerID;
+        private $slotID;
+        private $ownerID;
+        private $chefSlot;
+        private $cashierSlot;
+        private $waiterSlot;
+        private $slotDate;
+        private $managerID;
 
-    public function __construct($slotID, $ownerID, $chefSlot, $cashierSlot, $waiterSlot, $slotDate, $managerID)
+        public function __construct($slotID, $ownerID, $chefSlot, $cashierSlot, $waiterSlot, $slotDate, $managerID)
+        {
+            $this->slotID = $slotID;
+            $this->ownerID = $ownerID;
+            $this->chefSlot = $chefSlot;
+            $this->cashierSlot = $cashierSlot;
+            $this->waiterSlot = $waiterSlot;
+            $this->slotDate = $slotDate;
+            $this->managerID = $managerID;
+        }
+
+        public function getId()
+        {
+            return $this->slotID;
+        }
+
+        public function getOwnerID()
+        {
+            return $this->ownerID;
+        }
+
+        public function getChefSlot()
+        {
+            return $this->chefSlot;
+        }
+
+        public function getCashierSlot()
+        {
+            return $this->cashierSlot;
+        }
+
+        public function getWaiterSlot(){
+            return $this->waiterSlot;
+        }
+
+        public function getSlotDate(){
+        return $this->slotDate;
+        }
+
+        public function getManagerID(){
+            return $this->managerID;
+        }
+    }
+
+    class Bid
     {
-        $this->slotID = $slotID;
-        $this->ownerID = $ownerID;
-        $this->chefSlot = $chefSlot;
-        $this->cashierSlot = $cashierSlot;
-        $this->waiterSlot = $waiterSlot;
-        $this->slotDate = $slotDate;
-        $this->managerID = $managerID;
-    }
+        private $bidID;
+        private $cafeStaffID;
+        private $bidStatus;
+        private $cafeStaffRole;
+        private $slotDate;
+        private $managerID;
 
-    public function getId()
-    {
-        return $this->slotID;
-    }
+        public function __construct($bidID, $cafeStaffID, $bidStatus, $cafeStaffRole, $slotDate, $managerID)
+        {
+            $this->bidID = $bidID;
+            $this->cafeStaffID = $cafeStaffID;
+            $this->bidStatus = $bidStatus;
+            $this->cafeStaffRole = $cafeStaffRole;
+            $this->slotDate = $slotDate;
+            $this->managerID = $managerID;
+        }
 
-    public function getOwnerID()
-    {
-        return $this->ownerID;
-    }
+        public function getBidID()
+        {
+            return $this->bidID;
+        }
 
-    public function getChefSlot()
-    {
-        return $this->chefSlot;
-    }
+        public function getCafeStaffID()
+        {
+            return $this->cafeStaffID;
+        }
 
-    public function getCashierSlot()
-    {
-        return $this->cashierSlot;
-    }
+        public function getBidStatus()
+        {
+            return $this->bidStatus;
+        }
 
-    public function getWaiterSlot(){
-        return $this->waiterSlot;
-    }
+        public function getCafeStaffRole()
+        {
+            return $this->cafeStaffRole;
+        }
 
-    public function getSlotDate(){
-      return $this->slotDate;
-    }
+        public function getSlotDate(){
+        return $this->slotDate;
+        }
 
-    public function getManagerID(){
-        return $this->managerID;
-      }
+        public function getManagerID(){
+            return $this->managerID;
+        }
     }
 ?>
