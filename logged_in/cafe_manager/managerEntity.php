@@ -277,6 +277,52 @@
             }
         }
 
+        // public function getSlotRoleslots($bidID)
+        // {
+        //     try {
+        //         $connection = $this->connect();
+        //         $sql = "SELECT chefSlot, cashierSlot, waiterSlot 
+        //                 FROM WORK_SLOT
+        //                 where slotID = '$bidID'";
+        //         $result = mysqli_query($connection, $sql);
+        //         mysqli_close($connection);
+        //         return $result;
+        //     } catch (Exception $e) {
+        //         die('Failed to connect to the database: ' . mysqli_connect_error());
+        //     }
+        // }
+
+        public function getSlotRoleslots($bidID)
+{
+    try {
+        $connection = $this->connect();
+        $sql = "SELECT chefSlot, cashierSlot, waiterSlot 
+                FROM WORK_SLOT
+                WHERE slotID = '$bidID'";
+        $result = mysqli_query($connection, $sql);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $chefSlot = $row['chefSlot'];
+            $cashierSlot = $row['cashierSlot'];
+            $waiterSlot = $row['waiterSlot'];
+            mysqli_free_result($result);
+            mysqli_close($connection);
+            return [
+                'chefSlot' => $chefSlot,
+                'cashierSlot' => $cashierSlot,
+                'waiterSlot' => $waiterSlot
+            ];
+        } else {
+            mysqli_close($connection);
+            return null; // Handle the case when no rows are found.
+        }
+    } catch (Exception $e) {
+        die('Failed to connect to the database: ' . mysqli_connect_error());
+    }
+}
+
+
     }
 
     class Bids 
@@ -300,6 +346,25 @@
     
             return $connection;
         }
+
+        public function getBidByID($bidID) {
+            $connection = $this->connect();
+            $bidID = mysqli_real_escape_string($connection, $bidID);
+            $sql = "SELECT * FROM BIDDING_TABLE WHERE id = '$bidID'";
+            $result = mysqli_query($connection, $sql);
+        
+            if (mysqli_num_rows($result) > 0) {
+              $row = mysqli_fetch_assoc($result);
+              return new Bid(
+                $row['id'],
+                $row['staff_id'],
+                $row['bidding_status'],
+                $row['role'],
+                $row['slot_id'],
+                $row['managed_by']
+              );
+            }
+          }
 
         public function getPendingBids($slotID)
         {
@@ -342,6 +407,38 @@
                 die('Failed to connect to the database: ' . $e->getMessage());
             }
         }
+
+        public function getNoOfApprovedBids($slotID)
+        {
+            try {
+                $status = 'approved';
+                $connection = $this->connect();
+                // SQL query to retrieve the count of approved bids for the specified work slot
+                $sql = "SELECT COUNT(*) AS result_count
+                        FROM bidding_table bt
+                        INNER JOIN user_account ua 
+                        ON ua.userName = bt.staff_id 
+                        WHERE bt.slot_id = '$slotID'
+                        AND bt.bidding_status = '$status'";
+
+                $result = mysqli_query($connection, $sql);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $resultCount = $row['result_count'];
+                } else {
+                    // No results found
+                    $resultCount = 0;
+                }
+
+                mysqli_close($connection);
+
+                return $resultCount;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
 
         public function getRejectedBids($slotID)
         {

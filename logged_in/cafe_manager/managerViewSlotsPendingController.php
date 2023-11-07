@@ -23,5 +23,24 @@
 
             return $user->searchPendingBids($slotDate, $searchKeyword);
         }
+
+        public function getSlotRoleslots($bidID) {
+            $userEntity = new Slots();
+            $availableSlotRoleslots = $userEntity->getSlotRoleslots($bidID);
+            return $availableSlotRoleslots;
+        }
+
+        public function getBidByID($userID) {
+            $userEntity = new Bids();
+            $bidDetails = $userEntity->getBidByID($userID);
+            return $bidDetails;
+        }
+
+        public function getNoOfApprovedBids($slotDate)
+        {
+            $noOfApprovedBids = new Bids();
+
+            return $noOfApprovedBids->getNoOfApprovedBids($slotDate);
+        }
     }
 ?>

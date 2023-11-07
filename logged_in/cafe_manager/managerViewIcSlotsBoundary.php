@@ -63,7 +63,7 @@
 
         if ($resultSearch != FALSE) {
           echo "<table>";
-          echo "<tr><th>slotDate</th><th>chefSlot</th><th>cashierSlot</th><th>waiterSlot</th><th>Action</th><th>Pending</th><th>Approved</th><th>Rejected</th></tr>";
+          echo "<tr><th>slotDate</th><th>chefSlot</th><th>cashierSlot</th><th>waiterSlot</th><th>Action</th><th>Pending</th><th>Approved</th><th>Rejected</th><th>Available staff</th></tr>";
 
           // Output data of each user
           foreach ($resultSearch as $row) {

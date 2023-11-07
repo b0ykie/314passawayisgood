@@ -6,13 +6,42 @@
   require_once 'managerViewSlotsPendingController.php';
   $managerViewIcPendingSlotsController = new managerViewSlotsPendingController();
   $date = $managerViewIcPendingSlotsController->getSlotDate($slotID);
+  $availableSlotRoleslots = $managerViewIcPendingSlotsController->getSlotRoleslots($slotID);
+  $noOfApprovedBids = $managerViewIcPendingSlotsController->getNoOfApprovedBids($date);
 
   // Check if a search keyword is provided
   $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Call the searchUsers method with the search keyword
+  // Call the searchUsers method with the search keyword
   $result = $managerViewIcPendingSlotsController->onInit($date);
-  
+
+  //Store staff Role in variable used for comparison
+  $resultt = $managerViewIcPendingSlotsController->onInit($date);
+  while ($row = mysqli_fetch_assoc($resultt)) {
+    $staffRole = $row['role'];
+  }
+
+  //Store availableSlotRoleslots in variable used for comparison
+  $chefSlot = $availableSlotRoleslots['chefSlot'];
+  $cashierSlot = $availableSlotRoleslots['cashierSlot'];
+  $waiterSlot = $availableSlotRoleslots['waiterSlot'];
+
+  if ($availableSlotRoleslots >= 1) 
+  {
+    if ()
+    {
+
+    }
+
+    elseif ()
+    {
+      
+    }
+  }
+  else
+  {
+    
+  }
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +101,7 @@
             echo "<tr>";
             echo "<td>" . $row['staff_id'] . "</td>";
             echo "<td>" . $row['role'] . "</td>";
-            echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
+            echo "<td><a href='managerApproveSlotBoundary.php.php?id=" . $row['id'] . "'>Approve</a></td>";
             echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
             echo "</tr>";
           }
@@ -91,7 +120,7 @@
             echo "<tr>";
             echo "<td>" . $row['staff_id'] . "</td>";
             echo "<td>" . $row['role'] . "</td>";
-            echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
+            echo "<td><a href='managerApproveSlotBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
             echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
             echo "</tr>";
           }

@@ -72,7 +72,7 @@
             echo "<td>" . $row->getChefSlot() . "</td>";
             echo "<td>" . $row->getCashierSlot() . "</td>";
             echo "<td>" . $row->getWaiterSlot() . "</td>";
-            echo "<td><a href='managerTakeSlotBoundary.php?id=" . $row->getId() . "'>Bid</a></td>";
+            echo "<td><a href='managerTakeSlotBoundary.php?id=" . $row->getId() . "'>Take</a></td>";
             echo "</tr>";
           }
           echo "</table>";
@@ -92,7 +92,7 @@
             echo "<td>" . $row['chefSlot'] . "</td>";
             echo "<td>" . $row['cashierSlot'] . "</td>";
             echo "<td>" . $row['waiterSlot'] . "</td>";
-            echo "<td><a href='managerTakeSlotBoundary.php?id=" . $row['slotID'] . "'>Bid</a></td>";
+            echo "<td><a href='managerTakeSlotBoundary.php?id=" . $row['slotID'] . "'>Take</a></td>";
             echo "</tr>";
           }
           echo "</table>";
