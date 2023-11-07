@@ -1,5 +1,11 @@
 <?php
   session_start();
+
+  if (isset($_GET['message'])) {
+    $message = $_GET['message'];
+    echo "<script>alert('" . urldecode($message) . "');</script>";
+  }
+
   $managerID = $_SESSION['username'];
   $slotID = $_GET['id'];
 
@@ -25,23 +31,6 @@
   $chefSlot = $availableSlotRoleslots['chefSlot'];
   $cashierSlot = $availableSlotRoleslots['cashierSlot'];
   $waiterSlot = $availableSlotRoleslots['waiterSlot'];
-
-  if ($availableSlotRoleslots >= 1) 
-  {
-    if ()
-    {
-
-    }
-
-    elseif ()
-    {
-      
-    }
-  }
-  else
-  {
-    
-  }
 ?>
 
 <!DOCTYPE html>
@@ -120,7 +109,20 @@
             echo "<tr>";
             echo "<td>" . $row['staff_id'] . "</td>";
             echo "<td>" . $row['role'] . "</td>";
-            echo "<td><a href='managerApproveSlotBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
+
+            echo "<td>";
+            echo "<form action='approveController2.php' method='post'>";
+            echo "<input type='hidden' name='shiftDate' value='" . $date . "'>";
+            echo "<input type='hidden' name='chefSlot' value='" . $chefSlot . "'>";
+            echo "<input type='hidden' name='cashierSlot' value='" . $cashierSlot . "'>";
+            echo "<input type='hidden' name='waiterSlot' value='" . $waiterSlot . "'>";
+            echo "<input type='hidden' name='staffRole' value='" . $staffRole . "'>";
+            echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+            echo "<input type='hidden' name='action' value='approve'>";
+            echo "<button type='submit'>Approve</button>";
+            echo "</form>";
+            echo "</td>";
+            
             echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
             echo "</tr>";
           }

@@ -521,6 +521,112 @@
             }    
         }
 
+        public function decrementChefSlot($shiftDate)
+        {
+            try {
+                $query = "UPDATE work_slot SET chefSlot = chefSlot - 1 WHERE slotDate = :shiftDate";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':shiftDate', $shiftDate);
+                
+                // Execute the update
+                if ($stmt->execute()) {
+                    $rowCount = $stmt->rowCount();
+                    if ($rowCount > 0) {
+                        // Successfully decremented chefSlot
+                        return true;
+                    } else {
+                        // No rows were affected (likely no matching records)
+                        return false;
+                    }
+                } else {
+                    // Update failed
+                    return false;
+                }
+            } catch (PDOException $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
+        public function decrementCashierSlot($shiftDate)
+        {
+            try {
+                $query = "UPDATE work_slot SET cashierSlot = cashierSlot - 1 WHERE slotDate = :shiftDate";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':shiftDate', $shiftDate);
+                
+                // Execute the update
+                if ($stmt->execute()) {
+                    $rowCount = $stmt->rowCount();
+                    if ($rowCount > 0) {
+                        // Successfully decremented chefSlot
+                        return true;
+                    } else {
+                        // No rows were affected (likely no matching records)
+                        return false;
+                    }
+                } else {
+                    // Update failed
+                    return false;
+                }
+            } catch (PDOException $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
+        public function decrementWaiterSlot($shiftDate)
+        {
+            try {
+                $query = "UPDATE work_slot SET waiterSlot = waiterSlot - 1 WHERE slotDate = :shiftDate";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':shiftDate', $shiftDate);
+                
+                // Execute the update
+                if ($stmt->execute()) {
+                    $rowCount = $stmt->rowCount();
+                    if ($rowCount > 0) {
+                        // Successfully decremented chefSlot
+                        return true;
+                    } else {
+                        // No rows were affected (likely no matching records)
+                        return false;
+                    }
+                } else {
+                    // Update failed
+                    return false;
+                }
+            } catch (PDOException $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
+        public function setBidApproved($bidID)
+        {
+            try {
+                $query = "UPDATE bidding_table SET bidding_status = 'approved' WHERE id = :bidID";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':bidID', $bidID, PDO::PARAM_INT);
+
+                // Execute the update
+                if ($stmt->execute()) {
+                    $rowCount = $stmt->rowCount();
+                    if ($rowCount > 0) {
+                        // Successfully updated bidding_status to 'approved'
+                        return true;
+                    } else {
+                        // No rows were affected (likely no matching records)
+                        return false;
+                    }
+                } else {
+                    // Update failed
+                    return false;
+                }
+            } catch (PDOException $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
+
+
+        
     }
 
     class WorkSlot

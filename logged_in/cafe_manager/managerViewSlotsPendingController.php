@@ -42,5 +42,46 @@
 
             return $noOfApprovedBids->getNoOfApprovedBids($slotDate);
         }
+
+        public function updateNoOfSlots($slotDate)
+        {
+            switch ($staffRole) {
+                case 'chef':
+                    if ($chefSlot >= 1)
+                    {
+                      //Call controller and pass status to minus 1 via query
+                    }
+                    else
+                    {
+                      $message = "Either your Username, Password or Role is incorrect.";
+                      header("Location: managerViewSlotsPendingBoundary.php?message=" . urlencode($message));
+                    }
+                    break;
+                case 'cashier':
+                    if ($cashierSlot >= 1)
+                    {
+                      
+                    }
+                    else
+                    {
+                      $message = "Either your Username, Password or Role is incorrect.";
+                      header("Location: managerViewSlotsPendingBoundary.php?message=" . urlencode($message));
+                    }
+                    break;
+                case 'waiter':
+                    if ($waiterSlot >= 1)
+                    {
+                      
+                    }
+                    else
+                    {
+                      $message = "Either your Username, Password or Role is incorrect.";
+                      header("Location: managerViewSlotsPendingBoundary.php?message=" . urlencode($message));
+                    }
+                  break;
+                default:
+                    // Handle other cases (greater than 1, or any other values)
+            }
+        } 
     }
 ?>
