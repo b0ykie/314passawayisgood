@@ -8,6 +8,7 @@
 
   $managerID = $_SESSION['username'];
   $slotID = $_GET['id'];
+  $workSlotID = $_GET['id'];
 
   require_once 'managerViewSlotsPendingController.php';
   $managerViewIcPendingSlotsController = new managerViewSlotsPendingController();
@@ -90,8 +91,30 @@
             echo "<tr>";
             echo "<td>" . $row['staff_id'] . "</td>";
             echo "<td>" . $row['role'] . "</td>";
-            echo "<td><a href='managerApproveSlotBoundary.php.php?id=" . $row['id'] . "'>Approve</a></td>";
-            echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
+
+            echo "<td>";
+            echo "<form action='approveController.php' method='post'>";
+            echo "<input type='hidden' name='shiftDate' value='" . $date . "'>";
+            echo "<input type='hidden' name='chefSlot' value='" . $chefSlot . "'>";
+            echo "<input type='hidden' name='cashierSlot' value='" . $cashierSlot . "'>";
+            echo "<input type='hidden' name='waiterSlot' value='" . $waiterSlot . "'>";
+            // echo "<input type='hidden' name='staffRole' value='" . $staffRole . "'>";
+            echo "<input type='hidden' name='staffRole' value='" . $row['role'] . "'>";
+            echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+            echo "<input type='hidden' name='workSlotID' value='" . $workSlotID . "'>";
+            echo "<input type='hidden' name='action' value='approve'>";
+            echo "<button type='submit'>Approve</button>";
+            echo "</form>";
+            echo "</td>";
+
+            echo "<td>";
+            echo "<form action='approveController.php' method='post'>";
+            echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+            echo "<input type='hidden' name='action' value='reject'>";
+            echo "<button type='submit'>Reject</button>";
+            echo "</form>";
+            echo "</td>";
+
             echo "</tr>";
           }
           echo "</table>";
@@ -111,19 +134,28 @@
             echo "<td>" . $row['role'] . "</td>";
 
             echo "<td>";
-            echo "<form action='approveController2.php' method='post'>";
+            echo "<form action='approveController.php' method='post'>";
             echo "<input type='hidden' name='shiftDate' value='" . $date . "'>";
             echo "<input type='hidden' name='chefSlot' value='" . $chefSlot . "'>";
             echo "<input type='hidden' name='cashierSlot' value='" . $cashierSlot . "'>";
             echo "<input type='hidden' name='waiterSlot' value='" . $waiterSlot . "'>";
-            echo "<input type='hidden' name='staffRole' value='" . $staffRole . "'>";
+            // echo "<input type='hidden' name='staffRole' value='" . $staffRole . "'>";
+            echo "<input type='hidden' name='staffRole' value='" . $row['role'] . "'>";
             echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+            echo "<input type='hidden' name='workSlotID' value='" . $workSlotID . "'>";
             echo "<input type='hidden' name='action' value='approve'>";
             echo "<button type='submit'>Approve</button>";
             echo "</form>";
             echo "</td>";
             
-            echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
+            echo "<td>";
+            echo "<form action='approveController.php' method='post'>";
+            echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+            echo "<input type='hidden' name='action' value='reject'>";
+            echo "<button type='submit'>Reject</button>";
+            echo "</form>";
+            echo "</td>";
+
             echo "</tr>";
           }
           echo "</table>";

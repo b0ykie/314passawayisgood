@@ -82,6 +82,7 @@
             echo "<td><a href='managerViewSlotsPendingBoundary.php?id=" . $row->getId() . "'>Pending</a></td>";
             echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row->getId() . "'>Approved</a></td>";
             echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row->getId() . "'>Rejected</a></td>";
+            echo "<td><a href='managerViewAvailableStaffBoundary.php?id=" . $row->getId() . "'>Available</a></td>";
             echo "</tr>";
           }
           echo "</table>";
@@ -92,7 +93,7 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>slotDate</th><th>chefSlot</th><th>cashierSlot</th><th>waiterSlot</th><th>Action</th><th>Pending</th><th>Approved</th><th>Rejected</th></tr>";
+          echo "<tr><th>slotDate</th><th>chefSlot</th><th>cashierSlot</th><th>waiterSlot</th><th>Action</th><th>Pending</th><th>Approved</th><th>Rejected</th><th>Available staff</th></tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
@@ -105,6 +106,7 @@
             echo "<td><a href='managerViewSlotsPendingBoundary.php?id=" . $row['slotID'] . "'>Pending</a></td>";
             echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['slotID'] . "'>Approved</a></td>";
             echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['slotID'] . "'>Rejected</a></td>";
+            echo "<td><a href='managerViewAvailableStaffBoundary.php?id=" . $row['slotID'] . "'>Available</a></td>";
             echo "</tr>";
           }
           echo "</table>";

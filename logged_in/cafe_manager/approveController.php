@@ -1,105 +1,92 @@
 <?php
-
-    class approveController{
-
-        public function approveBid($chefSlotVal, $cashierSlotVal, $waiterSlotVal, $staffRoleVal, $staff_idVal){
-            
+    class bidController {
+        public function approveBid($staffRoleVal, $chefSlotVal, $cashierSlotVal, $waiterSlotVal, $shiftDateVal, $bidIDVal, $workSlotIDVal) {
             require_once 'managerEntity.php';
 
             // Instantiate the Bid entity
             $bid = new Bids();
 
-            // Retrieve the form data
+            //Retrieve the form data
+            $staffRole = $staffRoleVal;
             $chefSlot = $chefSlotVal;
             $cashierSlot = $cashierSlotVal;
             $waiterSlot = $waiterSlotVal;
-            $staffRole = $staffRoleVal;
-            $role = $roleVal;
+            $shiftDate = $shiftDateVal;
+            $bidID = $bidIDVal;
+            $workSlotID = $workSlotIDVal;
 
-            //Check role > slots > execute update query
+            // Check role and available slots
             switch ($staffRole) {
                 case 'chef':
-                    if ($chefSlot >= 1)
-                    {
-                        //Call controller and pass status to minus 1 via query
-                    }
-                    else
-                    {
-                        $message = "Less than 1 slots. Not able to approve";
-                        header("Location: managerViewSlotsPendingBoundary.php?message=" . urlencode($message));
+                    if ($chefSlot < 1) {
+                        $message = "Less than 1 chef slot available. Approval failed.";
+                        header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
                         exit();
+                    }
+                    else {
+                        $bid->decrementChefSlot($shiftDate);
                     }
                 case 'cashier':
-                    if ($cashierSlot >= 1)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $message = "Less than 1 slots. Not able to approve";
-                        header("Location: managerViewSlotsPendingBoundary.php?message=" . urlencode($message));
+                    if ($cashierSlot < 1) {
+                        $message = "Less than 1 cashier slot available. Approval failed.";
+                        header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
                         exit();
                     }
+                    else {
+                        $bid->decrementCashierSlot($shiftDate);
+                    }
+                    break;
                 case 'waiter':
-                    if ($waiterSlot >= 1)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $message = "Less than 1 slots. Not able to approve";
-                        header("Location: managerViewSlotsPendingBoundary.php?message=" . urlencode($message));
+                    if ($waiterSlot < 1) {
+                        $message = "Less than 1 waiter slot available. Approval failed.";
+                        header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
                         exit();
                     }
+                    else {
+                        $bid->decrementWaiterSlot($shiftDate);
+                    }
+                    break;
                 default:
-                    // Handle other cases (greater than 1, or any other values)
-
-            // Attempt to authenticate the user
-            $result = $bid->setBidApproved($chefSlot, $cashierSlot, $waiterSlot, $staffRole, $role);
-
-            if ($result) 
-            {
-
-                
-                switch ($result->getRole()) {
-                    case 'staff':
-                        header('Location: logged_in/cafe_staff/staffhomeBoundary.php');
-                        exit();
-                    case 'admin':
-                        header('Location: logged_in/system_admin/adminhomeBoundary.php');
-                        exit();
-                    case 'owner':
-                        header('Location: logged_in/cafe_owner/ownerhomeBoundary.php');
-                        exit();
-                    case 'manager':
-                        header('Location: logged_in/cafe_manager/managerhomeBoundary.php');
-                        exit();
-                    default:
-                        // Invalid role
-                        $message = "Invalid role";
-                        header("Location: loginBoundary.php?message=" . urlencode($message));
-                        exit();
-                }
+                    $message = "Unknown error!";
+                    header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
+                    exit();
             }
 
-            else {
-                // Failed approveBid
-                $message = "Either your Username, Password or Role is incorrect.";
-                header("Location: loginBoundary.php?message=" . urlencode($message));
-            }
+            $bid->setBidApproved($bidID);
+            $message = "Bid approved.";
+            header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
+        }
+
+        public function rejectBid($bidID) {
+            require_once 'managerEntity.php';
+
+            // Instantiate the Bid entity
+            $bid = new Bids();
+
+            $bid->setBidRejected($bidID);
+
+            $message = "Bid rejected!";
+            header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
         }
     }
-
+    // Obtain data from POST
+    $shiftDate = $_POST['shiftDate'];
+    $staffRole = $_POST['staffRole'];
     $chefSlot = $_POST['chefSlot'];
     $cashierSlot = $_POST['cashierSlot'];
     $waiterSlot = $_POST['waiterSlot'];
-    $staffRole = $_POST['staffRole'];
-    $staff_id = $_POST['staff_id'];
+    $bidID = $_POST['id'];
+    $action = $_POST['action'];
+    $workSlotID = $_POST['workSlotID'];
 
-    $approveController = new approveController();
+    // Initialize and call the controller
+    $bidController = new bidController();
 
-    $approveController ->approveBid($chefSlot, $cashierSlot, $waiterSlot, $staffRole, $staff_id);
-
-
-
+    if ($action == 'approve') {
+        $bidController->approveBid($staffRole, $chefSlot, $cashierSlot, $waiterSlot, $shiftDate, $bidID, $workSlotID);
+    }
+    else {
+        $bidController->rejectBid($bidID);
+    }
+    
 ?>

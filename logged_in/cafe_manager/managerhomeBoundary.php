@@ -1,5 +1,11 @@
 <?php
   session_start();
+
+  if (isset($_GET['message'])) {
+    $message = $_GET['message'];
+    echo "<script>alert('" . urldecode($message) . "');</script>";
+  }
+
   $username = $_SESSION['username'];
 
   require_once 'managerhomeController.php';

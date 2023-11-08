@@ -22,5 +22,12 @@
                 return FALSE;
             }
         }
+
+        public function getAvailableStaff($workSlotID)
+        {
+            $user = new User();
+
+            return $user->getAvailableStaff($workSlotID);
+        }
     }
 ?>

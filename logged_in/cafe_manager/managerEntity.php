@@ -36,6 +36,26 @@
                 return $userRole;
             }
         }
+
+        public function getAvailableStaff($workSlotID) {
+            try {
+                $connection = $this->connect();
+                $sql = "SELECT * from user_account ua 
+                inner join user_profile up  
+                on up.userProfileType = ua.userProfile 
+                and up.userProfileType = 'staff'
+                where ua.userName not in (select bt.staff_id from bidding_table bt
+                                inner join work_slot ws
+                                on ws.slotDate = bt.slot_id
+                                and ws.slotID = '$workSlotID'
+                                and bt.bidding_status = 'approved')";
+                $result = mysqli_query($connection, $sql);
+                mysqli_close($connection);
+                return $result;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . mysqli_connect_error());
+            }
+        }
     }
 
     class Slots
@@ -625,7 +645,31 @@
             }
         }
 
+        public function setBidRejected($bidID)
+        {
+            try {
+                $query = "UPDATE bidding_table SET bidding_status = 'rejected' WHERE id = :bidID";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':bidID', $bidID, PDO::PARAM_INT);
 
+                // Execute the update
+                if ($stmt->execute()) {
+                    $rowCount = $stmt->rowCount();
+                    if ($rowCount > 0) {
+                        // Successfully updated bidding_status to 'approved'
+                        return true;
+                    } else {
+                        // No rows were affected (likely no matching records)
+                        return false;
+                    }
+                } else {
+                    // Update failed
+                    return false;
+                }
+            } catch (PDOException $e) {
+                die('Failed to connect to the database: ' . $e->getMessage());
+            }
+        }
         
     }
 

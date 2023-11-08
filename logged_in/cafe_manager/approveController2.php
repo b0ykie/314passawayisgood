@@ -1,5 +1,5 @@
 <?php
-    class approveController {
+    class bidController {
         public function approveBid($staffRoleVal, $chefSlotVal, $cashierSlotVal, $waiterSlotVal, $shiftDateVal, $bidIDVal) {
             require_once 'managerEntity.php';
 
@@ -49,11 +49,25 @@
                     break;
                 default:
                     $message = "Unknown error!";
-                    header("Location: loginBoundary.php?message=" . urlencode($message));
+                    header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
                     exit();
             }
 
             $bid->setBidApproved($bidID);
+            $message = "Bid approved.";
+            header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
+        }
+
+        public function rejectBid($bidID) {
+            require_once 'managerEntity.php';
+
+            // Instantiate the Bid entity
+            $bid = new Bids();
+
+            $bid->setBidRejected($bidID);
+
+            $message = "Bid rejected!";
+            header("Location: managerViewIcSlotsBoundary.php?message=" . urlencode($message));
         }
     }
     // Obtain data from POST
@@ -63,8 +77,16 @@
     $cashierSlot = $_POST['cashierSlot'];
     $waiterSlot = $_POST['waiterSlot'];
     $bidID = $_POST['id'];
+    $action = $_POST['action'];
 
     // Initialize and call the controller
-    $approveController = new approveController();
-    $approveController->approveBid($staffRole, $chefSlot, $cashierSlot, $waiterSlot, $shiftDate, $bidID)
+    $bidController = new bidController();
+
+    if ($action == 'approve') {
+        $bidController->approveBid($staffRole, $chefSlot, $cashierSlot, $waiterSlot, $shiftDate, $bidID);
+    }
+    else {
+        $bidController->rejectBid($bidID);
+    }
+    
 ?>
