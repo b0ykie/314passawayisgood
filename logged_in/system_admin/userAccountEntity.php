@@ -58,6 +58,9 @@ class User
             $row['userProfile']
           );
         }
+        else {
+            return false;
+        }
       }
     
       public function updateAdminUserInfo($userID, $updatedUsername, $updatedPassword, $updatedEmail, $updatedProfile) {
@@ -91,6 +94,11 @@ class User
             $sql = "SELECT * FROM USER_ACCOUNT";
             $result = mysqli_query($connection, $sql);
             mysqli_close($connection);
+            
+            if (empty($result)) {
+                return false;
+            }
+            
             return $result;
         } catch (Exception $e) {
             die('Failed to connect to the database: ' . mysqli_connect_error());
@@ -104,6 +112,11 @@ class User
         $sql = "SELECT * FROM USER_ACCOUNT WHERE userName LIKE '%$searchKeyword%'";
         $result = mysqli_query($connection, $sql);
 
+        if (empty($result)) {
+            mysqli_close($connection);
+            return false;
+        }
+
         $searchUser = []; // Array to store BookTicket objects
 
         foreach ($result as $row) {
@@ -115,7 +128,6 @@ class User
             $row['userProfile']
           );
         }
-    
         mysqli_close($connection);
         return $searchUser;
     }
@@ -251,13 +263,13 @@ class User
         }
     }
 
-    public function insertNewUser($userName, $userPassword, $userEmail, $userProfile)
+    public function insertNewUser($userName, $userPassword, $userEmail, $userProfile, $randomPhoneNumber)
     {
         try {
             $connection = $this->connect();
 
-            $insertQuery = "INSERT INTO USER_ACCOUNT (userName, userPassword, userEmail, userProfile) 
-            VALUES ('$userName', '$userPassword', '$userEmail', '$userProfile')";
+            $insertQuery = "INSERT INTO USER_ACCOUNT (userName, userPassword, userEmail, userProfile, userPhone) 
+            VALUES ('$userName', '$userPassword', '$userEmail', '$userProfile', '$randomPhoneNumber')";
 
             mysqli_query($connection, $insertQuery);
             mysqli_close($connection);
@@ -265,7 +277,7 @@ class User
             return true;
 
         } catch (Exception $e) {
-
+            die('Failed to connect to the database: ' . mysqli_connect_error());
         }
     }
 

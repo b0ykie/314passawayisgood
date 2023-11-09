@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Café Staff Management System</title>
     <link rel="stylesheet" href="style.css">
   </head>
 
@@ -17,7 +17,7 @@
                     <li><a href="homeBoundary.php">Home</a></li>
                     
                     <li><a href="aboutUsBoundary.php">About Us</a></li>
-                    <li><a href="contactUs.php">Contact Us</a></li>
+                    <li><a href="contactUsBoundary.php">Contact Us</a></li>
                 </ul>
             </nav>
             <div class="user-actions">

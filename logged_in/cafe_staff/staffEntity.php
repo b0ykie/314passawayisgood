@@ -34,7 +34,7 @@
             if (mysqli_num_rows($result) > 0) {
                 $result = mysqli_fetch_assoc($result);
                 $userRole = strval($result['staffRole']);
-                return $userRole;
+                return $userRole; //Returns string
             }
         }
     }
@@ -88,7 +88,7 @@
                     $row = mysqli_fetch_assoc($result); // Fetch the row as an associative array
                     if ($row) {
                         $slotDate = $row['slotDate']; // Access the 'staffRole' value from the array
-                        return $slotDate;
+                        return $slotDate; 
                     }
                 }
             } catch (Exception $e) {

@@ -1,5 +1,3 @@
-.php
-
 <?php
     require_once 'managerEntity.php';
 
@@ -24,6 +22,13 @@
             $user = new User();
 
             return $user->getAvailableStaff($workSlotID);
+        }
+
+        public function searchAvailableStaff($workSlotID, $searchKeyword)
+        {
+            $user = new User();
+
+            return $user->searchAvailableStaff($workSlotID, $searchKeyword);
         }
     }
 ?>

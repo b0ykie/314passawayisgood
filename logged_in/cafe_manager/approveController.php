@@ -26,6 +26,7 @@
                     else {
                         $bid->decrementChefSlot($shiftDate);
                     }
+                    break;
                 case 'cashier':
                     if ($cashierSlot < 1) {
                         $message = "Less than 1 cashier slot available. Approval failed.";

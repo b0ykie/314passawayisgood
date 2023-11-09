@@ -7,7 +7,7 @@
   $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Call the searchUsers method with the search keyword
-  $result = $adminProfilesController->onInit();
+  $result = $adminProfilesController->getUserAccounts();
 ?>
 
 <!DOCTYPE html>

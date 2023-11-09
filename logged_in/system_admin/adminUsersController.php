@@ -4,11 +4,17 @@ require_once 'userAccountEntity.php';
 
 class AdminUsersController
 {
-    public function onInit()
+    public function getUserAccounts()
     {
         $user = new User();
 
-        return $user->getUserAccounts();
+        $result = $user->getUserAccounts();
+
+        if ($result !== false) {
+            return $result; //Returns array to boundary if true
+        } else {
+            return false;
+        }
     }
 
     public function searchUsers($searchKeyword)
@@ -17,10 +23,10 @@ class AdminUsersController
         $searchUser = $user->searchUserAccounts($searchKeyword);
 
         if (!empty($searchUser)) {
-            return $searchUser;
+            return $searchUser; //Returns array to boundary if true
         }
         else {
-            return FALSE;
+            return false;
         }
     }
 }

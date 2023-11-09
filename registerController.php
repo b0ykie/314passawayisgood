@@ -39,7 +39,9 @@
             }
 
             else {
-                $user->addUserToDatabase($username, $password, $email, $role);
+                //Generate random phone number
+                $randomPhoneNumber = mt_rand(80000000, 99999999);
+                $user->addUserToDatabase($username, $password, $email, $role, $randomPhoneNumber);
                 $message = "Registration success!";
                 header("Location: loginBoundary.php?message=" . urlencode($message));
                 exit();

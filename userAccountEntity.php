@@ -66,10 +66,17 @@
         }
 
         // Add the user to the database
-        public function addUserToDatabase($username, $password, $email, $role) {
+        public function addUserToDatabase($username, $password, $email, $role, $randomPhoneNumber) {
             // Prepare a statement to insert the user information into the database
-            $stmt = $this->db->prepare('INSERT INTO user_account (userName, userPassword, userEmail, userProfile) VALUES (:username, :password, :email, :role)');
-            $stmt->execute(array(':username' => $username, ':password' => $password, ':email' => $email, ':role' => $role));
+            // $stmt = $this->db->prepare('INSERT INTO user_account (userName, userPassword, userEmail, userProfile) VALUES (:username, :password, :email, :role)');
+            // $stmt->execute(array(':username' => $username, ':password' => $password, ':email' => $email, ':role' => $role));
+            try {
+                $stmt = $this->db->prepare('INSERT INTO user_account (userName, userPassword, userEmail, userProfile,  userPhone) VALUES (:username, :password, :email, :role, :phone)');
+                $stmt->execute(array(':username' => $username, ':password' => $password, ':email' => $email, ':role' => $role, ':phone' => $randomPhoneNumber));
+                return true; // User added successfully
+            } catch (PDOException $e) {
+                return false; // Failed to add user
+            }
         }
     }
 

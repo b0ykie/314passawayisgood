@@ -2,6 +2,7 @@
   session_start();
   $managerID = $_SESSION['username'];
   $slotID = $_GET['id'];
+  $workSlotID = $_GET['id'];
 
   require_once 'managerViewAvailableStaffController.php';
   $managerViewSlotsApprovedController = new managerViewAvailableStaffBoundary();
@@ -61,19 +62,33 @@
       <?php
       if (isset($_POST['submit'])) {
         $searchKeyword = $_POST['search'];
-        $resultSearch = $managerViewSlotsApprovedController->searchApprovedBids($date, $searchKeyword);
+        $resultSearch = $managerViewSlotsApprovedController->searchAvailableStaff($workSlotID, $searchKeyword);
 
         if ($resultSearch != FALSE) {
           echo "<table>";
-          echo "<tr><th>staffName</th><th>Role</th></tr>";
+          echo "<tr><th>staffName</th><th>Role</th><th>Number</th><th>Bid Status</th></tr>";
 
           // Output data of each user
           foreach ($resultSearch as $row) {
             echo "<tr>";
-            echo "<td>" . $row['staff_id'] . "</td>";
-            echo "<td>" . $row['role'] . "</td>";
-            // echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
-            // echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
+            echo "<td>" . $row['userName'] . "</td>";
+            
+            // Check if 'role' is empty
+            if (isset($row['role']) && !empty($row['role'])) {
+              echo "<td>" . $row['role'] . "</td>";
+            } 
+            else {
+              echo "<td>Did not make a bid</td>";
+            }
+
+            echo "<td>" . $row['userPhone'] . "</td>";
+
+            if (isset($row['role']) && !empty($row['role'])) {
+              echo "<td>" . $row['bidding_status'] . "</td>";
+            } 
+            else {
+              echo "<td>Did not make a bid</td>";
+            }
             echo "</tr>";
           }
           echo "</table>";
@@ -84,15 +99,30 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>staffName</th><th>Role</th></tr>";
+          echo "<tr><th>staffName</th><th>Role</th><th>Number</th><th>Bid Status</th></tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . $row['userName'] . "</td>";
-            echo "<td>" . $row['userEmail'] . "</td>";
-            // echo "<td><a href='managerViewSlotsApprovedBoundary.php?id=" . $row['id'] . "'>Approve</a></td>";
-            // echo "<td><a href='managerViewSlotsRejectedBoundary.php?id=" . $row['id'] . "'>Reject</a></td>";
+            
+            // Check if 'role' is empty
+            if (isset($row['role']) && !empty($row['role'])) {
+              echo "<td>" . $row['role'] . "</td>";
+            } 
+            else {
+              echo "<td>Did not make a bid</td>";
+            }
+
+            echo "<td>" . $row['userPhone'] . "</td>";
+
+            if (isset($row['role']) && !empty($row['role'])) {
+              echo "<td>" . $row['bidding_status'] . "</td>";
+            } 
+            else {
+              echo "<td>Did not make a bid</td>";
+            }
+
             echo "</tr>";
           }
           echo "</table>";

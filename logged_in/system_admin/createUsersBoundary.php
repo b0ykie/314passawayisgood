@@ -3,7 +3,7 @@
   $username = $_SESSION['username'];
   require_once 'createUsersController.php';
   $adminController = new CreateUsersController();
-  $user = $adminController->onInit();
+  $user = $adminController->onInit(); 
 
   // Check if the form was submitted
   if ($_SERVER["REQUEST_METHOD"] === "POST") {
