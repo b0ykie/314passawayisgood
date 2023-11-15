@@ -1,5 +1,11 @@
 <?php
   session_start();
+
+  if (isset($_GET['message'])) {
+    $message = $_GET['message'];
+    echo "<script>alert('" . urldecode($message) . "');</script>";
+  }
+
   $managerID = $_SESSION['username'];
   $slotID = $_GET['id'];
   $workSlotID = $_GET['id'];
@@ -7,13 +13,18 @@
   require_once 'managerViewAvailableStaffController.php';
   $managerViewSlotsApprovedController = new managerViewAvailableStaffBoundary();
   $date = $managerViewSlotsApprovedController->getSlotDate($slotID);
+  $availableSlotRoleslots = $managerViewSlotsApprovedController->getSlotRoleslots($slotID);
 
   // Check if a search keyword is provided
   $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Call the searchUsers method with the search keyword
-  $result = $managerViewSlotsApprovedController->getAvailableStaff($slotID);
+  // Call the searchUsers method with the search keyword
+  $result = $managerViewSlotsApprovedController->getAvailableStaff($date);
   
+  //Store availableSlotRoleslots in variable used for comparison
+  $chefSlot = $availableSlotRoleslots['chefSlot'];
+  $cashierSlot = $availableSlotRoleslots['cashierSlot'];
+  $waiterSlot = $availableSlotRoleslots['waiterSlot'];
 ?>
 
 <!DOCTYPE html>
@@ -66,29 +77,77 @@
 
         if ($resultSearch != FALSE) {
           echo "<table>";
-          echo "<tr><th>staffName</th><th>Role</th><th>Number</th><th>Bid Status</th></tr>";
+          echo "<tr><th>staffName</th><th>Number</th><th>Bid Status</th><th>Bid Role</th><th>assignedStaffRole</th><th>Action</th></tr>";
 
           // Output data of each user
           foreach ($resultSearch as $row) {
+            var_dump($row);
+
             echo "<tr>";
+
             echo "<td>" . $row['userName'] . "</td>";
-            
-            // Check if 'role' is empty
-            if (isset($row['role']) && !empty($row['role'])) {
-              echo "<td>" . $row['role'] . "</td>";
-            } 
-            else {
-              echo "<td>Did not make a bid</td>";
-            }
 
             echo "<td>" . $row['userPhone'] . "</td>";
 
-            if (isset($row['role']) && !empty($row['role'])) {
-              echo "<td>" . $row['bidding_status'] . "</td>";
+            echo "<td>" . $row['bidding_status'] . "</td>";
+
+            echo "<td>" . $row['biddingRole'] . "</td>";
+            
+            // Check if bid status is empty or pending
+            // if (isset($row['bidding_status']) && !empty($row['bidding_status'])) {
+            //   if ($row['bidding_status'] === 'pending') {
+            //     echo "<td>Please approve staff</td>";
+            //     } 
+            //   else {
+            //     echo "<td>" . $row['bidding_status'] . "</td>";
+            //     }
+            //   } 
+            //   else {
+            //     echo "<td>No bid</td>";
+            //   }
+              
+            
+
+            // if (isset($row['biddingRole']) && !empty($row['biddingRole'])) {
+            //   echo "<td>" . $row['biddingRole'] . "</td>";
+            // } 
+            // else {
+            //   echo "<td>No bid role</td>";
+            // }
+
+            if (!empty($row['assignedStaffRole'])) {
+              echo "<td>" . $row['assignedStaffRole'] . "</td>";
             } 
             else {
-              echo "<td>Did not make a bid</td>";
+              echo "<td>Please assign role</td>";
             }
+          
+            //Assigned Role
+            if (empty($row['biddingRole']) && empty($row['assignedStaffRole'])) {
+              // Condition 1: If there is nothing for both biddingRole and assignedStaffRole
+              echo "<td>-</td>";
+              } elseif (empty($row['biddingRole']) && !empty($row['assignedStaffRole'])) {
+                  // Condition 2: If there is nothing for biddingRole but it has assignedStaffRole
+                  echo "<td>";
+                  echo "<form action='assignControllerr.php' method='post'>";
+                  echo "<input type='hidden' name='shiftDate' value='" . $date . "'>";
+                  echo "<input type='hidden' name='chefSlot' value='" . $chefSlot . "'>";
+                  echo "<input type='hidden' name='cashierSlot' value='" . $cashierSlot . "'>";
+                  echo "<input type='hidden' name='waiterSlot' value='" . $waiterSlot . "'>";
+                  echo "<input type='hidden' name='staffRole' value='" . $row['assignedStaffRole'] . "'>";
+                  echo "<input type='hidden' name='id' value='" . $row['userID'] . "'>";
+                  echo "<input type='hidden' name='workSlotID' value='" . $workSlotID . "'>";
+                  echo "<input type='hidden' name='action' value='approve'>";
+                  echo "<button type='submit'>Approve</button>";
+                  echo "</form>";
+                  echo "</td>";
+              } elseif (!empty($row['biddingRole']) && !empty($row['assignedStaffRole'])) {
+                  // Condition 3: If there are values for both biddingRole and assignedStaffRole
+                  echo "<td>Please approve staff</td>";
+              } else {
+                  // Add an else condition if needed
+              }
+
             echo "</tr>";
           }
           echo "</table>";
@@ -99,29 +158,69 @@
       } else {
         if (mysqli_num_rows($result) > 0) {
           echo "<table>";
-          echo "<tr><th>staffName</th><th>Role</th><th>Number</th><th>Bid Status</th></tr>";
+          echo "<tr><th>staffName</th><th>Number</th><th>Bid Status</th><th>Bid Role</th><th>assignedStaffRole</th><th>Action</th></tr>";
 
           // Output data of each user
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
+
             echo "<td>" . $row['userName'] . "</td>";
-            
-            // Check if 'role' is empty
-            if (isset($row['role']) && !empty($row['role'])) {
-              echo "<td>" . $row['role'] . "</td>";
-            } 
-            else {
-              echo "<td>Did not make a bid</td>";
-            }
 
             echo "<td>" . $row['userPhone'] . "</td>";
+            
+            // Check if bid status is empty or pending
+            if (isset($row['bidding_status']) && !empty($row['bidding_status'])) {
+              if ($row['bidding_status'] === 'pending') {
+                echo "<td>Please approve staff</td>";
+                } 
+              else {
+                echo "<td>" . $row['bidding_status'] . "</td>";
+                }
+              } 
+              else {
+                echo "<td>No bid</td>";
+              }
+          
 
-            if (isset($row['role']) && !empty($row['role'])) {
-              echo "<td>" . $row['bidding_status'] . "</td>";
+            if (isset($row['biddingRole']) && !empty($row['biddingRole'])) {
+              echo "<td>" . $row['biddingRole'] . "</td>";
             } 
             else {
-              echo "<td>Did not make a bid</td>";
+              echo "<td>No bid role</td>";
             }
+
+            if (!empty($row['assignedStaffRole'])) {
+              echo "<td>" . $row['assignedStaffRole'] . "</td>";
+            } 
+            else {
+              echo "<td>Please assign role</td>";
+            }
+          
+            //Assigned Role
+            if (empty($row['biddingRole']) && empty($row['assignedStaffRole'])) {
+              // Condition 1: If there is nothing for both biddingRole and assignedStaffRole
+              echo "<td>-</td>";
+              } elseif (empty($row['biddingRole']) && !empty($row['assignedStaffRole'])) {
+                  // Condition 2: If there is nothing for biddingRole but it has assignedStaffRole
+                  echo "<td>";
+                  echo "<form action='assignControllerr.php' method='post'>";
+                  echo "<input type='hidden' name='shiftDate' value='" . $date . "'>";
+                  echo "<input type='hidden' name='chefSlot' value='" . $chefSlot . "'>";
+                  echo "<input type='hidden' name='cashierSlot' value='" . $cashierSlot . "'>";
+                  echo "<input type='hidden' name='waiterSlot' value='" . $waiterSlot . "'>";
+                  echo "<input type='hidden' name='staffRole' value='" . $row['assignedStaffRole'] . "'>";
+                  echo "<input type='hidden' name='id' value='" . $row['userID'] . "'>";
+                  echo "<input type='hidden' name='workSlotID' value='" . $workSlotID . "'>";
+                  echo "<input type='hidden' name='action' value='approve'>";
+                  echo "<button type='submit'>Approve</button>";
+                  echo "</form>";
+                  echo "</td>";
+              } elseif (!empty($row['biddingRole']) && !empty($row['assignedStaffRole'])) {
+                  // Condition 3: If there are values for both biddingRole and assignedStaffRole
+                  echo "<td>Please approve staff</td>";
+              } else {
+                  // Add an else condition if needed
+              }
 
             echo "</tr>";
           }

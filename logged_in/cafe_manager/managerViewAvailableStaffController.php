@@ -17,18 +17,23 @@
             return $slotDate;
         }
 
-        public function getAvailableStaff($workSlotID)
+        public function getAvailableStaff($workSlotDate)
         {
             $user = new User();
 
-            return $user->getAvailableStaff($workSlotID);
+            return $user->getAvailableStaff($workSlotDate);
         }
 
         public function searchAvailableStaff($workSlotID, $searchKeyword)
         {
             $user = new User();
-
             return $user->searchAvailableStaff($workSlotID, $searchKeyword);
+        }
+
+        public function getSlotRoleslots($slotID) {
+            $userEntity = new Slots();
+            $availableSlotRoleslots = $userEntity->getSlotRoleslots($slotID);
+            return $availableSlotRoleslots;
         }
     }
 ?>
