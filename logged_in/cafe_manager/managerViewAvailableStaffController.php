@@ -35,5 +35,8 @@
             $availableSlotRoleslots = $userEntity->getSlotRoleslots($slotID);
             return $availableSlotRoleslots;
         }
+
     }
+
+    
 ?>

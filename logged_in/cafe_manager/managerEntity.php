@@ -744,8 +744,86 @@
                 die('Failed to connect to the database: ' . $e->getMessage());
             }
         }
-        
+
+        public function getUsername($bidID)
+        {
+            $connection = $this->connect();
+
+            if (!$connection) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            try {
+                $sql = "SELECT ua.userName FROM user_account ua
+                        WHERE ua.userID = '$bidID'";
+                $result = mysqli_query($connection, $sql);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $username = $row['userName'];
+                    mysqli_close($connection);
+                    return $username;
+                } else {
+                    mysqli_close($connection);
+                    return null; // No user found with the provided ID
+                }
+            } catch (Exception $e) {
+                mysqli_close($connection);
+                die('Failed to execute query: ' . $e->getMessage());
+            }
+        }
+
+
+    //     public function createSlotBid($userName, $staffRole, $shiftDate, $managerId)
+    //     {
+    //         try {
+    //             $query1 = "INSERT INTO bidding_table (staff_id, bidding_status, role, slot_id, managed_by) 
+    //                     VALUES (:staffID, 'approved', :role, :slotID, :managedBy)";
+    //             $stmt1 = $this->db->prepare($query1);
+    //             // Bind values
+    //             $stmt1->bindValue(':staffID', $userName, PDO::PARAM_INT); // Replace with appropriate value
+    //             $stmt1->bindValue(':role', $staffRole, PDO::PARAM_STR); // Replace with appropriate value
+    //             $stmt1->bindValue(':slotID', $shiftDate, PDO::PARAM_INT); // Replace with appropriate value
+    //             $stmt1->bindValue(':managedBy', $managerId, PDO::PARAM_INT); // Replace with appropriate value
+
+    //             // Execute the insert
+    //             if ($stmt1->execute()) {
+    //                 // Successfully inserted a new record
+    //                 return true;
+    //             } else {
+    //                 // Insert failed
+    //                 return false;
+    //             }
+    //         } catch (PDOException $e) {
+    //             die('Failed to connect to the database for operation 1: ' . $e->getMessage());
+    //         }
+    //     }
+
+    // }
+
+    public function createSlotBid($userName, $staffRole, $shiftDate, $managerId)
+        {
+            try {
+                $success = 'approved';
+                $stmt = $this->db->prepare('INSERT INTO bidding_table (staff_id, bidding_status, role, slot_id, managed_by) VALUES (:username, :biddingStatus, :userrole, :slotdate, :managerID)');
+                $stmt->execute(array(':username' => $userName, ':biddingStatus' => $success, ':userrole' => $staffRole, ':slotdate' => $shiftDate, ':managerID' => $managerId));
+                return true;
+            } catch (Exception $e) {
+                die('Failed to connect to the database: ' . mysqli_connect_error());
+            }
+        }
     }
+
+    // public function createSlotBid($username, $userrole, $slotdate, $slotmanager) {
+    //         try {
+    //             $stmt = $this->db->prepare('INSERT INTO bidding_table (staff_id, role, slot_id, managed_by) VALUES (:username, :userrole, :slotdate, :managerID)');
+    //             $stmt->execute(array(':username' => $username, ':userrole' => $userrole, ':slotdate' => $slotdate, ':managerID' => $slotmanager));
+    //             return true;
+    //         } catch (Exception $e) {
+    //             die('Failed to connect to the database: ' . mysqli_connect_error());
+    //         }
+            
+    //     }
 
     class WorkSlot
     {
