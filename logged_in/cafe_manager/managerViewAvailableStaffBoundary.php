@@ -127,13 +127,14 @@
               } elseif (empty($row['biddingRole']) && !empty($row['assignedStaffRole'])) {
                   // Condition 2: If there is nothing for biddingRole but it has assignedStaffRole
                   echo "<td>";
-                  echo "<form action='managerAssignSlotBoundary.php' method='post'>";
+                  echo "<form action='managerAssignSlotController.php' method='post'>";
                   echo "<input type='hidden' name='shiftDate' value='" . $date . "'>";
                   echo "<input type='hidden' name='chefSlot' value='" . $chefSlot . "'>";
                   echo "<input type='hidden' name='cashierSlot' value='" . $cashierSlot . "'>";
                   echo "<input type='hidden' name='waiterSlot' value='" . $waiterSlot . "'>";
                   echo "<input type='hidden' name='staffRole' value='" . $row['assignedStaffRole'] . "'>";
                   echo "<input type='hidden' name='id' value='" . $row['userID'] . "'>";
+                  echo "<input type='hidden' name='workSlotID' value='" . $workSlotID . "'>";
                   echo "<input type='hidden' name='managerID' value='" . $managerID . "'>";
                   echo "<input type='hidden' name='action' value='approve'>";
                   echo "<button type='submit'>Approve</button>";

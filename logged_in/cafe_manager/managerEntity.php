@@ -41,40 +41,39 @@
             try {
                 $connection = $this->connect();
                 $sql = "
-                with users_with_cafe_role as (
-                    select
+                WITH users_with_cafe_role AS (
+                    SELECT
                         cs.userID,
                         cs.staffRole
-                    from cafe_staff cs
+                    FROM cafe_staff cs
                 ),
-                staff_only_user_accounts as (
-                    select ua.* from user_account ua
-                    inner join user_profile up
-                    on up.userProfileType = ua.userProfile
-                    and up.userProfileType = 'staff'
+                staff_only_user_accounts AS (
+                    SELECT ua.*
+                    FROM user_account ua
+                    INNER JOIN user_profile up ON up.userProfileType = ua.userProfile
+                    AND up.userProfileType = 'staff'
+                    -- and ua.userName like :userName
                 ),
-                pending_and_rejected_staff as (
-                    select * from bidding_table bt
-                    inner join work_slot ws
-                    on bt.slot_id = ws.slotDate
-                    where bt.bidding_status in ('pending','rejected')
-                    and ws.slotDate = '$workSlotID'
+                pending_and_rejected_staff AS (
+                    SELECT *
+                    FROM bidding_table bt
+                    INNER JOIN work_slot ws ON bt.slot_id = ws.slotDate
+                    AND ws.slotDate = '$workSlotID'
                 )
-                select
+                SELECT
                     soua.userID,
                     soua.userName,
                     soua.userPhone,
                     aps.bidding_status,
-                    aps.role as biddingRole,
-                    uwcr.staffRole as assignedStaffRole
-                from staff_only_user_accounts soua
-                left join pending_and_rejected_staff aps
-                on aps.staff_id = soua.userName
-                left join users_with_cafe_role uwcr
-                on uwcr.userID = soua.userName
-                where soua.userName in (select ap.staff_id from pending_and_rejected_staff ap)
-                or (aps.bidding_status is null)
-                                                    ";
+                    aps.role AS biddingRole,
+                    uwcr.staffRole AS assignedStaffRole
+                FROM staff_only_user_accounts soua
+                LEFT JOIN pending_and_rejected_staff aps ON aps.staff_id = soua.userName
+                LEFT JOIN users_with_cafe_role uwcr ON uwcr.userID = soua.userName
+                -- Filter in pending/rejected staff, and staff who have not made a bid yet
+                WHERE aps.bidding_status IN ('rejected','pending')
+                OR (aps.id IS NULL)
+                ";
                 $result = mysqli_query($connection, $sql); //Can remove pending if you don't want to show pending
                 mysqli_close($connection);
                 return $result;
@@ -91,36 +90,38 @@
             try {
                 $connection = $this->connect();
                 $sql = "
-                    WITH users_with_cafe_role AS (
-                        SELECT
-                            cs.userID,
-                            cs.staffRole
-                        FROM cafe_staff cs
-                    ),
-                    staff_only_user_accounts AS (
-                        SELECT ua.* FROM user_account ua
-                        INNER JOIN user_profile up ON up.userProfileType = ua.userProfile
-                        AND up.userProfileType = 'staff'
-                        AND ua.userName like '%$searchKeyword%'
-                    ),
-                    pending_and_rejected_staff AS (
-                        SELECT * FROM bidding_table bt
-                        INNER JOIN work_slot ws ON bt.slot_id = ws.slotDate
-                        WHERE bt.bidding_status IN ('pending', 'rejected')
-                        AND ws.slotDate = '$workSlotDate'
-                    )
+                WITH users_with_cafe_role AS (
                     SELECT
-                        soua.userID,
-                        soua.userName,
-                        soua.userPhone,
-                        aps.bidding_status,
-                        aps.role AS biddingRole,
-                        uwcr.staffRole AS assignedStaffRole
-                    FROM staff_only_user_accounts soua
-                    LEFT JOIN pending_and_rejected_staff aps ON aps.staff_id = soua.userName
-                    LEFT JOIN users_with_cafe_role uwcr ON uwcr.userID = soua.userName
-                    WHERE soua.userName IN (SELECT ap.staff_id FROM pending_and_rejected_staff ap)
-                    OR (aps.bidding_status IS NULL);
+                        cs.userID,
+                        cs.staffRole
+                    FROM cafe_staff cs
+                ),
+                staff_only_user_accounts AS (
+                    SELECT ua.*
+                    FROM user_account ua
+                    INNER JOIN user_profile up ON up.userProfileType = ua.userProfile
+                    AND up.userProfileType = 'staff'
+                    and ua.userName like '%$searchKeyword%'
+                ),
+                pending_and_rejected_staff AS (
+                    SELECT *
+                    FROM bidding_table bt
+                    INNER JOIN work_slot ws ON bt.slot_id = ws.slotDate
+                    AND ws.slotDate = '$workSlotDate'
+                )
+                SELECT
+                    soua.userID,
+                    soua.userName,
+                    soua.userPhone,
+                    aps.bidding_status,
+                    aps.role AS biddingRole,
+                    uwcr.staffRole AS assignedStaffRole
+                FROM staff_only_user_accounts soua
+                LEFT JOIN pending_and_rejected_staff aps ON aps.staff_id = soua.userName
+                LEFT JOIN users_with_cafe_role uwcr ON uwcr.userID = soua.userName
+                -- Filter in pending/rejected staff, and staff who have not made a bid yet
+                WHERE aps.bidding_status IN ('rejected','pending')
+                OR (aps.id IS NULL)
                     ";
                 $result = mysqli_query($connection, $sql);
                 mysqli_close($connection);
