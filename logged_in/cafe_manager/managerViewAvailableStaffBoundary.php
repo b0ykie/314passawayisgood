@@ -73,7 +73,7 @@
       <?php
       if (isset($_POST['submit'])) {
         $searchKeyword = $_POST['search'];
-        $resultSearch = $managerViewSlotsApprovedController->searchAvailableStaff($workSlotID, $searchKeyword);
+        $resultSearch = $managerViewSlotsApprovedController->searchAvailableStaff($date, $searchKeyword);
 
         if ($resultSearch != FALSE) {
           echo "<table>";
@@ -81,39 +81,37 @@
 
           // Output data of each user
           foreach ($resultSearch as $row) {
-            var_dump($row);
-
             echo "<tr>";
 
             echo "<td>" . $row['userName'] . "</td>";
 
             echo "<td>" . $row['userPhone'] . "</td>";
 
-            echo "<td>" . $row['bidding_status'] . "</td>";
+            // echo "<td>" . $row['bidding_status'] . "</td>";
 
-            echo "<td>" . $row['biddingRole'] . "</td>";
+            // echo "<td>" . $row['biddingRole'] . "</td>";
             
-            // Check if bid status is empty or pending
-            // if (isset($row['bidding_status']) && !empty($row['bidding_status'])) {
-            //   if ($row['bidding_status'] === 'pending') {
-            //     echo "<td>Please approve staff</td>";
-            //     } 
-            //   else {
-            //     echo "<td>" . $row['bidding_status'] . "</td>";
-            //     }
-            //   } 
-            //   else {
-            //     echo "<td>No bid</td>";
-            //   }
+            //Check if bid status is empty or pending
+            if (isset($row['bidding_status']) && !empty($row['bidding_status'])) {
+              if ($row['bidding_status'] === 'pending') {
+                echo "<td>Please approve staff</td>";
+                } 
+              else {
+                echo "<td>" . $row['bidding_status'] . "</td>";
+                }
+              } 
+              else {
+                echo "<td>No bid</td>";
+              }
               
             
 
-            // if (isset($row['biddingRole']) && !empty($row['biddingRole'])) {
-            //   echo "<td>" . $row['biddingRole'] . "</td>";
-            // } 
-            // else {
-            //   echo "<td>No bid role</td>";
-            // }
+            if (isset($row['biddingRole']) && !empty($row['biddingRole'])) {
+              echo "<td>" . $row['biddingRole'] . "</td>";
+            } 
+            else {
+              echo "<td>No bid role</td>";
+            }
 
             if (!empty($row['assignedStaffRole'])) {
               echo "<td>" . $row['assignedStaffRole'] . "</td>";

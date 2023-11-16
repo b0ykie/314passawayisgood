@@ -24,10 +24,10 @@
             return $user->getAvailableStaff($workSlotDate);
         }
 
-        public function searchAvailableStaff($workSlotID, $searchKeyword)
+        public function searchAvailableStaff($workSlotDate, $searchKeyword)
         {
             $user = new User();
-            return $user->searchAvailableStaff($workSlotID, $searchKeyword);
+            return $user->searchAvailableStaff($workSlotDate, $searchKeyword);
         }
 
         public function getSlotRoleslots($slotID) {

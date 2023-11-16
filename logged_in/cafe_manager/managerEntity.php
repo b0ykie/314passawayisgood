@@ -83,7 +83,7 @@
             }
         }
 
-        public function searchAvailableStaff($workSlotID, $searchKeyword) {
+        public function searchAvailableStaff($workSlotDate, $searchKeyword) {
             // if(empty($searchKeyword)){
             //     $result = $this->getAvailableStaff($workSlotID);
             //     return $result;
@@ -107,7 +107,7 @@
                         SELECT * FROM bidding_table bt
                         INNER JOIN work_slot ws ON bt.slot_id = ws.slotDate
                         WHERE bt.bidding_status IN ('pending', 'rejected')
-                        AND ws.slotDate = '$workSlotID'
+                        AND ws.slotDate = '$workSlotDate'
                     )
                     SELECT
                         soua.userID,
